@@ -19,6 +19,7 @@ const WelcomeScreen = () => {
                 />
             <Pressable 
                     onPress={()=>navigation.navigate('Connexion')}
+                    
                     style={style.button}
                 >
                     <Text style={style.buttonText}>Commencez</Text>
