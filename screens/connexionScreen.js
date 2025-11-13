@@ -1,60 +1,160 @@
-import { View, StyleSheet, Text, Image,Pressable, TextInput } from "react-native"
+
+import { useState } from "react"
+import { View, StyleSheet, Text, Image,Pressable, TextInput, ScrollView } from "react-native"
 
 
-const ConnexionScreen = () => {
+const ConnexionScreen = ({ navigate }) => {
+
+    // HOOKS INITIATION 
+    const [formData, setFormData] = useState({email:'', mtp:''})
+    const [errors, setErrors] = useState({})
 
 
-    return (<View style={style.main}>
-                <Image 
-                source={require('../assets/logo.png')}
-                style={style.logo}  />
-                <View style={style.contain}>
-                    <View><Text style={style.title}>Bienvenue sur Eliandre shop</Text></View> 
-                    <View><Text style={style.subTitle}>Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.</Text></View>
-                </View>
-                <View style={style.contain}>
-                    <Text style={style.label_email}>Email *</Text>
-                    <TextInput
-                        style={style.input}
-                        placeholder="andrea@gmail.com"
-                        autoCapitalize="words"
-                        autoCorrect={false}
-                    />
-                    <Text style={style.text_erreur}> Email incorrect ou invalid</Text>
-                </View>
+    
+    // function to valid email and return boolean : true or false
+    const emailValidate = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(String(email).toLowerCase());
+    }
 
-                <View style={style.contain}>
-                    <Text style={style.label_mot_de_passe}>Mot de passe *</Text>
-                    <TextInput
-                        style={style.input}
-                        placeholder="••••••••"
-                        secureTextEntry
-                        autoCapitalize="none"
-                    />
-                    <Text style={style.text_erreur}> Mot de passe incorrect ou insuffiant</Text>
-                </View>
+    //****** FUNCTION FOR HANDLEONCHANGE */
+    const  handleOnChange = (field, value) => {
+        setFormData(prev => ({...prev, [field]: value}))
+        // clean the error field
+        if(errors[field]) {
+            setErrors(prev=>({...prev,[field]: ''}))
+        } 
+    }
 
-                <View style={style.contain}>
-                    <Pressable 
-                        onPress={()=>navigation.navigate('Accueil')}
-                        style={style.button}
-                    >
-                        <Text style={style.buttonText}>Connecter</Text>
-                </Pressable>
-                </View>
+    const Validation = () => {
+        //VARIABLES INIT
+        const newError = {}
+
+        //vérifie le champs email vide 
+        if(!formData.email.trim()){
+            newError.email = "L'email est requis."
+        }//Validation de l'email 
+        else if(!emailValidate(formData.email)){
+            newError.email = "L'email est inalide"
+        }
+
+        // //vérifie le champs mot de passe vide
+         if (!formData.mtp.trim()) {
+            newError.mtp = 'Le mot de passe est requis.';
+            } 
+        else if (formData.mtp.length < 8 ) {
+            // newError.mtp = 'The password must contain 8 caracters minum';
+            newError.mtp = 'le mot de passe doit contenir au Minimum 8 caractères.';
+        } 
+        else if(formData.mtp.length > 25){
+            // newError.mtp = 'The password must contain 25 caracters maximum';
+            newError.mtp = 'le mot de passe doit contenir au maximun Minimum 25 characters.';
+        }
+        //Vérifie la présence d'une majuscule
+        else if(!/[A-Z]/.test(formData.mtp)){
+            // newError.mtp = 'The password must contain one capitalize letter';
+            newError.mtp = 'le mot de passe doit contenir au moins une lettre majuscule.';
+        }
+        // Vérifie la présence d'un chiffre
+        else if(!/[0-9]/.test(formData.mtp)){
+            // newError.mtp = 'The password must contain one number';
+            newError.mtp = 'le mot de passe doit contenir au moins un nombre.';
+        }
+        // Vérifie la présence d’un caractère spécial
+        else if(!/[!@#$%^&*(),.?":{}|<>]/.test(formData.mtp)){
+            // newError.mtp = 'The password must contain one capitalize letter';
+            newError.mtp = 'le mot de passe doit contenir au moins  un caractère spécial.';
+        }
+        
+        setErrors(newError)
+
+        return Object.keys(newError).length === 0
+    }
+
+    //*********** HANDLE ON SUBMIT */
+    const handleOnSubmit = () => {
+        if(Validation()){ 
+            console.log("login success")
+            console.log(emailValidate(formData.email))
+            console.log(emailValidate(formData.mtp))
+            console.log(errors)
+        } 
+        else {
+            console.log("failed")
+            console.log(emailValidate(formData.email))
+            console.log(emailValidate(formData.mtp))
+            console.log(errors.length)
+            console.log(errors)
+        }
+        setFormData({email:'', mtp:''})
+          
+   }
+
+    return ( 
+            <View style={style.main}>
+                <ScrollView 
+                vertical={true}
+                showsVerticalScrollIndicator={false}
+                >
+                    <View style={style.main}>
+                        <Image 
+                        source={require('../assets/logo.png')}
+                        style={style.logo}  />
+                    </View>
                 
+                    <View style={style.contain}>
+                        <View><Text style={style.title}>Bienvenue sur Eliandre shop</Text></View> 
+                        <View><Text style={style.subTitle}>Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.</Text></View>
+                    </View>
+                    <View style={style.contain}>
+                        <Text style={style.label_email}>Email *</Text>
+                        <TextInput
+                            style={style.input}
+                            placeholder="andrea@gmail.com"
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            keyboardType="default"
+                            value={formData.email}
+                            onChangeText = {(value)=> handleOnChange('email',value)}
+                        />
+                        {errors.email && <Text style={style.text_erreur}> {errors.email}</Text>}
+                    </View>
 
+                    <View style={style.contain}>
+                        <Text style={style.label_mot_de_passe}>Mot de passe *</Text>
+                        <TextInput
+                            style={style.input}
+                            placeholder="••••••••"
+                            secureTextEntry
+                            autoCapitalize="none"
+                            value={formData.mtp}
+                            onChangeText = {(value)=> handleOnChange('mtp',value)}
+                        />
+                        {errors.mtp && <Text style={style.text_erreur}> {errors.mtp}</Text>}
+                    </View>
 
-                <View style={style.contain}>
-                    <Text style={style.text_end}>Pas de compte ?
-                    <Pressable
-                    style={{paddingTop:10}}
-                     onPress={()=>navigation.navigate('Inscription')}><Text style={style.text_end_colored}> S'inscrire </Text>
-                    </Pressable> 
-                    </Text>
-                </View>
-                
-            </View>)
+                    <View style={style.contain}>
+                        <Pressable 
+                            // onPress={()=>navigate.pop('Accueil')}
+                            onPress={handleOnSubmit}
+                            style={style.button}
+                        >
+                            <Text style={style.buttonText}>Connecter</Text>
+                        </Pressable>
+                    </View>
+                 
+                    <View style={style.contain}>
+                        <Text style={style.text_end}>Pas de compte ?
+                        <Pressable
+                        style={{paddingTop:10}}
+                        onPress={()=>navigate.navigate('Inscription')}><Text style={style.text_end_colored}> S'inscrire </Text>
+                        </Pressable> 
+                        </Text>
+                    </View>
+                </ScrollView>
+            </View>
+            
+            )
 }
 export default ConnexionScreen
 
@@ -143,6 +243,9 @@ const style = StyleSheet.create({
         marginBottom:10,
         color:'red',
         fontWeight: '600',
+        textAlign:'center',
+        paddingLeft: 10,
+        paddingRight:10
     },
     text_end:{
         color: '#333',
