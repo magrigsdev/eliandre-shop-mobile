@@ -39,23 +39,23 @@ const InscriptionScreen = () => {
         //VARIABLES INIT
         const newError = {}
 
-        //vérifie le champs email vide 
-        if(!formData.email.trim()){
+        //vérifie le champs email vide  OK
+        if(formData.email && formData.email.trim() !== ''){
             newError.email = "L'email est requis."
         }//Validation de l'email 
         else if(!emailValidate(formData.email)){
             newError.email = "L'email est invalide"
         }
 
-        // //vérifie le champs mot de passe vide
-         if (!formData.mtp.trim()) {
+        ///vérifie le champs mot de passe vide OK
+         if (formData.mtp && formData.mtp.trim() !== '') {
             newError.mtp = 'Le mot de passe est requis.';
             } 
-        else if (formData.mtp.length < 8 ) {
+        else if (formData.mtp && formData.mtp.length < 8 ) {
             // newError.mtp = 'The password must contain 8 caracters minum';
             newError.mtp = 'le mot de passe doit contenir au Minimum 8 caractères.';
         } 
-        else if(formData.mtp.length > 25){
+        else if(formData.mtp && formData.mtp.length > 25){
             // newError.mtp = 'The password must contain 25 caracters maximum';
             newError.mtp = 'le mot de passe doit contenir au maximun Minimum 25 characters.';
         }
@@ -75,20 +75,20 @@ const InscriptionScreen = () => {
             newError.mtp = 'le mot de passe doit contenir au moins  un caractère spécial.';
         }
 
-        if(!formData.nom.trim()){
+        if(formData.nom.trim() !== '' ){
             newError.nom = 'le nom est requis.';
-        }else if(formData.nom.length < 14){
+        }else if(formData.nom.length > 14){
             newError.nom = 'le nom est trop long';
         }
         // validation prenom
-        if(!formData.prenom.trim()){
+        if(formData.prenom.trim() !==''){
             newError.prenom = 'le prenom est requis.';
-        }else if(formData.prenom.length < 14){
+        }else if(formData.prenom.length > 14){
             newError.prenom = 'le prénom est trop long';
         }
         // Validation du téléphone
         const telRegex = /^[0-9]{10}$/;
-        if (!formData.telephone.trim()) {
+        if (formData.telephone && !formData.telephone.trim()) {
         newError.telephone = 'Le téléphone est requis';
         } else if (!telRegex.test(formData.telephone.replace(/\s/g, ''))) {
         newError.telephone = 'Téléphone invalide (10 chiffres)';
@@ -100,26 +100,130 @@ const InscriptionScreen = () => {
         
         setErrors(newError)
 
-        return Object.keys(newError).length === 0
+        if(newError && Object.keys(newError).length === 0) return true
+        else return false
     }
+
+    //**************  VALIDATION CHAMPS PAR CHAMPS */
+    //VALIDATION NOM
+    const validateNom = () => {
+        let erreur = ""
+        if(typeof formData.nom !== "undefined")
+            formData.nom.trim() =='' ? erreur = "le nom est requis":''
+        else erreur = "le nom est requis"
+        return erreur
+    }
+    //VALIDATION PRENNOM
+    const validatePrenom = () => {
+        let erreur = ""
+        if(typeof formData.prenom !== "undefined"){
+           if(formData.prenom.trim() =='') 
+                erreur = "le prénom est requis"
+            
+        }
+            
+        else erreur = "le prénom est requis"
+        return erreur
+    }
+    //VALIDATION TELEPHONE
+    const validateTelephone = () => {
+        let erreur = ""
+        if(formData.telephone){
+            if (formData.telephone.length > 0 && formData.telephone.length < 10) {
+                erreur = 'Téléphone doit contenir  10 chiffres';
+            }
+        } 
+        else erreur = "le telephone est requis"
+        return erreur
+    }
+
+    //VALIDATION EMAIL
+    const validateEmail = () => {
+        let erreur = ""
+        if( typeof formData.email !== "undefined"){
+            if(formData.email.trim() =='' ) erreur = "Email est requis"
+            //Validation de l'email 
+            else if(!emailValidate(formData.email))
+                erreur = "L'email est invalide"
+        }
+        else erreur = "Email est requis"
+        return erreur
+    }
+    //VALIDATION MOT DE PASSE
+    const validateMotdepasse = () => {
+        let erreur = ""
+            if(formData.mtp && formData.mtp.trim() =='')
+                {
+                   erreur = "mot de passe est requis"
+                }
+            else if(!formData.mtp) 
+                {
+                    erreur = "mot de passe est requis"
+                }   
+            else if (formData.mtp.length > 0 && formData.mtp.length < 8 ) 
+                {
+                    erreur = 'le mot de passe doit contenir au Minimum 8 caractères.';
+                } 
+            else if( formData.mtp.length > 25)
+                {
+                    erreur = 'le mot de passe doit contenir au maximun Minimum 25 characters.';
+                }
+            // //Vérifie la présence d'une majuscule
+            else if(!/[A-Z]/.test(formData.mtp))
+                {
+                    erreur = 'le mot de passe doit contenir au moins une lettre majuscule.';
+                }
+            //// Vérifie la présence d'un chiffre
+            else if(!/[0-9]/.test(formData.mtp))
+                {
+                    erreur = 'le mot de passe doit contenir au moins un nombre.';
+                }
+            //         // Vérifie la présence d’un caractère spécial
+            else if(!/[!@#$%^&*(),.?":{}|<>]/.test(formData.mtp))
+                {
+                    erreur = 'le mot de passe doit contenir au moins  un caractère spécial.';
+                }
+            
+        return erreur;
+    }
+    //CONFIRMATION DU MOT DE PASSE 
+    const confirmMotdepasse = () => {
+        let erreur = ""
+        
+        if(formData.cmtp && formData.cmtp.trim() =='')
+            {
+                erreur = "la confirmation de mot de passe est requis"
+            }
+        else if(!formData.cmtp) 
+            {
+                erreur = "la confirmation de mot de passe est requis"
+            } 
+        else if(formData.mtp )
+            {   
+                if(formData.mtp !== formData.cmtp)
+                    erreur = 'Les mots de passe ne correspondent pas';
+            }        
+        return erreur
+    }
+
+
+    const validationChamps = () => {
+        const erreurs = {}
+        validatePrenom() !=='' ? erreurs.prenom = validatePrenom():''
+        validateNom() !=='' ? erreurs.nom = validateNom():''
+        validateTelephone() !=='' ? erreurs.telephone = validateTelephone():''
+        validateEmail() !=='' ? erreurs.email = validateEmail():''
+        validateMotdepasse() !=='' ? erreurs.mtp = validateMotdepasse():''
+        confirmMotdepasse() !=='' ? erreurs.cmtp = confirmMotdepasse():''
+
+        setErrors(erreurs)   
+    }
+    
 
     //*********** HANDLE ON SUBMIT */
     const handleOnSubmit = () => {
-        if(Validation()){ 
-            console.log("login success")
-            console.log(emailValidate(formData.email))
-            console.log(emailValidate(formData.mtp))
-            console.log(errors)
-        } 
-        else {
-            console.log("failed")
-            console.log(emailValidate(formData.email))
-            console.log(emailValidate(formData.mtp))
-            console.log(errors.length)
-            console.log(errors)
-        }
-        setFormData({email:'', mtp:''})
-          
+        validationChamps()
+        setFormData({email:'', mtp:''})     
    }
     return (<> 
                 
@@ -192,8 +296,8 @@ const InscriptionScreen = () => {
                                             style={style.input}
                                             placeholder="078765476"
                                             autoCapitalize="words"
-                                            autoCorrect={false}
-                                            keyboardType="numeric"
+                                            keyboardType="phone-pad"
+                                            maxLength={10}
                                             value={formData.telephone}
                                             onChangeText = {(value)=> handleOnChange('telephone',value)}
                                         />
@@ -215,6 +319,7 @@ const InscriptionScreen = () => {
                                     <View style={style.contain}>
                                         <Text style={style.label_cmtp}>Confirmation de mot de passe *</Text>
                                         <TextInput
+                                            required={true}
                                             style={style.input}
                                             placeholder="••••••••"
                                             secureTextEntry
@@ -244,7 +349,7 @@ const InscriptionScreen = () => {
                                         </Text>
                                     </View>
                                 </ScrollView>
-                            </View>
+                </View>
             </>)
 }
 export default InscriptionScreen
