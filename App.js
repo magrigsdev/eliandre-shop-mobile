@@ -1,12 +1,20 @@
 
-import ConnexionScreen from './screens/connexionScreen';
-import WelcomeScreen from './screens/welcomeScreen';
 
+
+import StackNavigator from './navigations/stackNavigator';
+import { NavigationContainer } from "@react-navigation/native";
+import ConnexionScreen from './screens/connexionScreen';
 
 export default function App() {
   return (
-      // <WelcomeScreen/> 
+      // <NavigationContainer>
+      //   <StackNavigator/>
+      // </NavigationContainer>
+
       <ConnexionScreen/>
-  );
+
+      
+      
+  )
 }
 

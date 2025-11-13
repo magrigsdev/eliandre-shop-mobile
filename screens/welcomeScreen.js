@@ -1,7 +1,7 @@
 import { Text, View,Image, Pressable, StyleSheet } from "react-native"
 
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigate }) => {
     return (
         <View style={style.main}>
 
@@ -18,7 +18,7 @@ const WelcomeScreen = () => {
                 style={style.bienvenue}
                 />
             <Pressable 
-                    onPress={()=>navigation.navigate('Connexion')}
+                    onPress={()=>navigate.navigate('Connexion')}
                     
                     style={style.button}
                 >
