@@ -51,6 +51,11 @@ export const style = StyleSheet.create({
     },
    
     
+    bienvenue:{
+        width:'100%',
+        height:239,
+
+    },
     button:{
         marginTop: 20,
         backgroundColor: 'teal',

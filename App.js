@@ -13,9 +13,7 @@ export default function App() {
       // </NavigationContainer>
 
       // <ConnexionScreen/>
-      <InscriptionScreen/>
-
-      
+     <InscriptionScreen/>  
       
   )
 }
