@@ -1,6 +1,5 @@
-
 import { useState } from "react"
-import { View, StyleSheet, Text, Image,Pressable, TextInput, ScrollView } from "react-native"
+import { View,  Text, Image,Pressable, TextInput, ScrollView } from "react-native"
 import { style } from "../styles/connexionStyle"
 
 
