@@ -148,8 +148,8 @@ export const style = StyleSheet.create({
         fontWeight: '600',
         color: '#333',
         textAlign:'center',
-        width:200,
-        marginTop:5,
+        width:250,
+        marginTop:0,
     },
     text_end_colored:{
         color: '#333',
