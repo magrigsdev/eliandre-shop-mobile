@@ -3,7 +3,7 @@ import { View,  Text, Image,Pressable, TextInput, ScrollView } from "react-nativ
 import { style } from "../styles/connexionStyle"
 
 
-const ConnexionScreen = () => {
+const ConnexionScreen = ({ navigation }) => {
 
     // HOOKS INITIATION 
     const [formData, setFormData] = useState({email:'', mtp:''})
@@ -147,7 +147,7 @@ const ConnexionScreen = () => {
                         <Text style={style.text_end}>Pas de compte ?
                         <Pressable
                         style={{paddingTop:10}}
-                        // onPress={()=>navigate.navigate('Inscription')}
+                        onPress={()=>navigation.navigate('Inscription')}
                         >
                         <Text style={style.text_end_colored}> S'inscrire </Text>
                         </Pressable> 
