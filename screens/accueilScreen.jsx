@@ -9,7 +9,6 @@ const AccueilScreen = ({ navigate }) => {
             source={require('../assets/logo.png')}
             style={style.logo}  />
             <View style={style.contain}>
-                
                 <Text style={style.text_1}>Salut !<Text style={style.text_2}>  Matheo</Text></Text>
             </View>
             <Image 
