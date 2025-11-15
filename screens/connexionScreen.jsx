@@ -75,16 +75,9 @@ const ConnexionScreen = ({ navigation }) => {
     const handleOnSubmit = () => {
         if(Validation()){ 
             console.log("login success")
-            console.log(emailValidate(formData.email))
-            console.log(emailValidate(formData.mtp))
-            console.log(errors)
         } 
         else {
             console.log("failed")
-            console.log(emailValidate(formData.email))
-            console.log(emailValidate(formData.mtp))
-            console.log(errors.length)
-            console.log(errors)
         }
         setFormData({email:'', mtp:''})
           
@@ -114,6 +107,7 @@ const ConnexionScreen = ({ navigation }) => {
                             autoCapitalize="words"
                             autoCorrect={false}
                             keyboardType="default"
+                            secureTextEntry={true}
                             value={formData.email}
                             onChangeText = {(value)=> handleOnChange('email',value)}
                         />
@@ -125,7 +119,7 @@ const ConnexionScreen = ({ navigation }) => {
                         <TextInput
                             style={style.input}
                             placeholder="••••••••"
-                            secureTextEntry
+                            secureTextEntry = {true}
                             autoCapitalize="none"
                             value={formData.mtp}
                             onChangeText = {(value)=> handleOnChange('mtp',value)}

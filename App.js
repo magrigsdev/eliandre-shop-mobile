@@ -9,9 +9,11 @@ import WelcomeScreen from './screens/welcomeScreen';
 import AccueilScreen from './screens/accueilScreen';
 
 export default function App() {
-  return (<><StackNavigator/></>
-      
-        
+  return (
+        <>
+          <StackNavigator/>
+        </>
+
     // <ConnexionScreen/>
      //<InscriptionScreen/> 
      //<WelcomeScreen/>

@@ -237,7 +237,7 @@ const InscriptionScreen = () => {
                                         <TextInput
                                             style={style.input}
                                             placeholder="••••••••"
-                                            secureTextEntry
+                                            secureTextEntry={true}
                                             autoCapitalize="none"
                                             value={formData.mtp}
                                             onChangeText = {(value)=> handleOnChange('mtp',value)}
@@ -250,7 +250,7 @@ const InscriptionScreen = () => {
                                             required={true}
                                             style={style.input}
                                             placeholder="••••••••"
-                                            secureTextEntry
+                                            secureTextEntry={true}
                                             autoCapitalize="none"
                                             value={formData.cmtp}
                                             onChangeText = {(value)=> handleOnChange('cmtp',value)}
