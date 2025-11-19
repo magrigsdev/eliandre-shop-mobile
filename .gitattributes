@@ -1,0 +1,63 @@
+# --------------------------
+# Forcer LF sur tous les fichiers texte
+# --------------------------
+* text=auto eol=lf
+
+# --------------------------
+# Fichiers JS / TS / JSX / TSX
+# --------------------------
+*.js   text eol=lf
+*.jsx  text eol=lf
+*.ts   text eol=lf
+*.tsx  text eol=lf
+
+# --------------------------
+# Styles
+# --------------------------
+*.css  text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+
+# --------------------------
+# JSON / Config
+# --------------------------
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# --------------------------
+# Markdown / Documentation
+# --------------------------
+*.md   text eol=lf
+
+# --------------------------
+# Scripts
+# --------------------------
+*.sh   text eol=lf
+*.bat  text eol=lf
+
+# --------------------------
+# Images et ressources (ne jamais toucher)
+# --------------------------
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.svg  binary
+*.ttf  binary
+*.otf  binary
+
+# --------------------------
+# Android build files
+# --------------------------
+*.apk  binary
+*.aab  binary
+
+# --------------------------
+# iOS build files
+# --------------------------
+*.xcworkspace binary
+*.xcuserstate binary
+*.xcodeproj  binary
+
