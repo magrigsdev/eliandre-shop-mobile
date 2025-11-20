@@ -1,6 +1,7 @@
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native"
 import { style } from "../styles/signupStyle"
 import { useState } from "react"
+import { VerifUser } from "../database/tasks"
 
 const SingupScreen = ({navigation}) => {
     // HOOKS INITIATION 
@@ -72,8 +73,12 @@ const SingupScreen = ({navigation}) => {
 
     //*********** HANDLE ON SUBMIT */
     const handleOnSubmit = () => {
+
         if(Validation()){ 
-            Alert
+            if(VerifUser(formData.nom, formData.email) !== null)
+            {
+                navigation.replace('home')
+            }
             console.log("login success")
         } 
         else {
@@ -103,11 +108,10 @@ const SingupScreen = ({navigation}) => {
                         <Text style={style.label_email}>Email *</Text>
                         <TextInput
                             style={style.input}
-                            placeholder="andrea@gmail.com"
+                            placeholder="email"
                             autoCapitalize="words"
                             autoCorrect={false}
                             keyboardType="default"
-                            secureTextEntry={true}
                             value={formData.email}
                             onChangeText = {(value)=> handleOnChange('email',value)}
                         />
