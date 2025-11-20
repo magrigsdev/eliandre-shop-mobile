@@ -174,8 +174,7 @@ const RegisterScreen = ({navigation}) => {
         const handleOnSubmit = async () => {
             
             if(validationChamps()){
-                
-                
+                  
                 try {
                         
                      console.log ("je suis dans aprés ")
@@ -185,11 +184,15 @@ const RegisterScreen = ({navigation}) => {
                                 formData.email,
                                 formData.telephone,
                                 formData.mtp);
-                        Alert.alert('Inscription réussie', `Bienvenue,${formData.prenom}  ${formData.nom} !`);
-                        console.log ("utilisateur enregistré ")
-                        setFormData({email:'', mtp:'',nom:'',prenom:'',telephone,cmtp:''}) 
+                        Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom}
+                              ${formData.nom} !`);
 
-                    } catch (error) {
+                        console.warn ("utilisateur enregistré ")
+                        setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
+
+
+                    } 
+                    catch (error) {
                         console.error('Erreur lors de l\'insertion :', error);
                         Alert.alert('Erreur', 'Impossible d\'insérer l\'utilisateur.');
                     
