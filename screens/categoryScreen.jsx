@@ -2,7 +2,7 @@ import { FlatList, View, Text, TextInput, Image } from "react-native";
 import { styles } from "../styles/categoryStyle";
 import { useEffect, useState } from "react";
 
-const Category = () => {
+const CategoryScreen = () => {
     //HOOKS
     const [recherche, setRecherche] = useState("") 
     const [sacs, setSacs] = useState([]);
@@ -76,4 +76,4 @@ const Category = () => {
                 </>);
 
 }
-export default Category
+export default CategoryScreen

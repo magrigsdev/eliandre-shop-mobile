@@ -1,9 +1,14 @@
- import Stack from "./navigations/stack";
+import Stack from "./navigations/stack";
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   
   return (
-    <Stack/>
+    // <Stack/>
+      <NavigationContainer>
+          <Stack />
+      </NavigationContainer>
+    
   );
 }
 

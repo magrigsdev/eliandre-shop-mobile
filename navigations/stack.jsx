@@ -5,14 +5,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import SingupScreen from "../screens/signupScreen";
 import RegisterScreen from "../screens/registerScreen";
 import HomeScreen from "../screens/homeScreen";
+import { Tabs } from "./tab";
 
 const Stacks = createNativeStackNavigator()
 
 
 const Stack = () => {
     return (
-        <NavigationContainer>
-            <Stacks.Navigator initialRouteName="welcome">
+        
+            <Stacks.Navigator 
+            initialRouteName="welcome"
+            screenOptions={{headerShown: false}}
+            >
                 <Stacks.Screen name="welcome" component={WelcomeScreen} 
                     options={{ title :"Bienvenue"}}
                 />
@@ -22,11 +26,11 @@ const Stack = () => {
                 <Stacks.Screen name="register" component={RegisterScreen}
                 options={{ title :"Création d'un compte" }}
                 />
-                <Stacks.Screen name="home" component={HomeScreen}
+                <Stacks.Screen name="tabs" component={Tabs}
                 options={{ title :"Accueil" }}
                 />
             </Stacks.Navigator> 
-        </NavigationContainer>    
+          
     )
 }
 export default Stack
