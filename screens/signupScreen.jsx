@@ -139,7 +139,7 @@ const SingupScreen = () => {
                         <Text style={style.text_end}>Pas de compte ?
                         <Pressable
                         style={{paddingTop:10}}
-                        onPress={()=>navigation.navigate('Inscription')}
+                        onPress={()=>navigation.goBack('Inscription')}
                         >
                         <Text style={style.text_end_colored}> S'inscrire </Text>
                         </Pressable> 

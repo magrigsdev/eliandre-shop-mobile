@@ -1,6 +1,6 @@
 import { Text, View,Image, Pressable } from "react-native"
 import { style } from './../styles/welcomeStyle';
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}) => {
     return (
         <View style={style.main}>
         
@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
                 style={style.bienvenue}
                 />
             <Pressable 
-                    onPress={()=>{}}
+                    onPress={()=> navigation.navigate('signup')}
                     style={style.button}
                 >
                     <Text style={style.buttonText}>Commencez</Text>
