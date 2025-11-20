@@ -1,6 +1,8 @@
 import { Alert, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import { style } from '../styles/registerStyle'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { InitDB } from '../database/initdb'
+import { InsertUser } from '../database/tasks'
 
 const RegisterScreen = ({navigation}) => {
     // HOOKS INITIATION 
@@ -156,10 +158,51 @@ const RegisterScreen = ({navigation}) => {
             }
             return validation
         }
+        //****************** BASE DE DONNEES */
+        useEffect(() => { useEffect
+            const setupDB = async () => {
+                try {
+                    await InitDB(); 
+                } catch (error) {
+                    console.error("Erreur lors de l'initialisation de la base :", error);
+                }
+            };
+            setupDB();
+        }, []);
+
         //*********** HANDLE ON SUBMIT */
-        const handleOnSubmit = () => {
-            validationChamps() && goHome() ;
-            validationChamps() && console.log("go home") ;
+        const handleOnSubmit = async () => {
+            
+            if(validationChamps()){
+                  
+                try {
+                        
+                     console.log ("je suis dans aprés ")
+                        await InsertUser(
+                                formData.nom, 
+                                formData.prenom,
+                                formData.email,
+                                formData.telephone,
+                                formData.mtp);
+                        Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom}
+                              ${formData.nom} !`);
+
+                        console.warn ("utilisateur enregistré ")
+                        setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
+
+
+                    } 
+                    catch (error) {
+                        console.error('Erreur lors de l\'insertion :', error);
+                        Alert.alert('Erreur', 'Impossible d\'insérer l\'utilisateur.');
+                    
+                    }
+
+                
+            }
+            
+            // validationChamps() && goHome() ;
+            // validationChamps() && console.log("go home") ;
             
             setFormData({email:'', mtp:''})  
             console.log(errors)
@@ -179,6 +222,10 @@ const RegisterScreen = ({navigation}) => {
                                 vertical={true}
                                 showsVerticalScrollIndicator={false}
                                 >
+                                <View style={style.main}>
+                                    <Image source={{ uri:'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}}
+                                        style={style.logo}  />
+                                </View>
                                 <View style={style.row}>
                                     <Text style={style.titleInsc}>Inscription </Text>
                                 </View>
@@ -193,7 +240,7 @@ const RegisterScreen = ({navigation}) => {
                                         
                                         <TextInput
                                             style={style.input}
-                                            placeholder="Banzouzi"
+                                            placeholder="nom"
                                             autoCapitalize="words"
                                             autoCorrect={false}
                                             keyboardType="default"
@@ -207,7 +254,7 @@ const RegisterScreen = ({navigation}) => {
                                         <Text style={style.label_prenom}>Prénom *</Text>
                                         <TextInput
                                             style={style.input}
-                                            placeholder="Andréa"
+                                            placeholder="prenom"
                                             autoCapitalize="words"
                                             autoCorrect={false}
                                             keyboardType="default"
@@ -222,7 +269,7 @@ const RegisterScreen = ({navigation}) => {
                                         <Text style={style.label_email}>Email *</Text>
                                         <TextInput
                                             style={style.input}
-                                            placeholder="andréa@gmail.com"
+                                            placeholder="email"
                                             autoCapitalize="words"
                                             autoCorrect={false}
                                             keyboardType="default"
@@ -237,7 +284,7 @@ const RegisterScreen = ({navigation}) => {
                                         <Text style={style.label_telephone}>Téléphone *</Text>
                                         <TextInput
                                             style={style.input}
-                                            placeholder="078765476"
+                                            placeholder="telephone"
                                             autoCapitalize="words"
                                             keyboardType="phone-pad"
                                             maxLength={10}
