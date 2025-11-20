@@ -184,21 +184,18 @@ const RegisterScreen = ({navigation}) => {
                                 formData.email,
                                 formData.telephone,
                                 formData.mtp);
-                        Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom}
+                                Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom}
                               ${formData.nom} !`);
 
-                        console.warn ("utilisateur enregistré ")
+                        navigation.replace('home')
                         setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
-
-
                     } 
                     catch (error) {
                         console.error('Erreur lors de l\'insertion :', error);
                         Alert.alert('Erreur', 'Impossible d\'insérer l\'utilisateur.');
                     
                     }
-
-                
+     
             }
             
             // validationChamps() && goHome() ;
@@ -207,11 +204,6 @@ const RegisterScreen = ({navigation}) => {
             setFormData({email:'', mtp:''})  
             console.log(errors)
             console.log(validationChamps())   
-        }
-
-        const goHome = () => {
-            navigation.replace('home')
-            Alert.alert('Enregister')
         }
         
 
