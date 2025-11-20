@@ -72,6 +72,7 @@ const SingupScreen = ({navigation}) => {
     //*********** HANDLE ON SUBMIT */
     const handleOnSubmit = () => {
         if(Validation()){ 
+            Alert
             console.log("login success")
         } 
         else {

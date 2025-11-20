@@ -26,7 +26,8 @@
       "favicon": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-sqlite"
     ]
   }
 }
