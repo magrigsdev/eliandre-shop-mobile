@@ -9,6 +9,10 @@ export const style = StyleSheet.create({
         backgroundColor:'white',
         padding:30,
     },
+        logo:{
+        width:158,
+        height:139,
+    },
 
     backButton:{
         width:30,
@@ -27,6 +31,7 @@ export const style = StyleSheet.create({
         textAlign: 'center',
         flex: 1,
         marginTop:20,
+        fontVariant:'capitalize'
     },
     //**********  */
     title:{

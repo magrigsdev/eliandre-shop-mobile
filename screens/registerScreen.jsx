@@ -179,6 +179,10 @@ const RegisterScreen = ({navigation}) => {
                                 vertical={true}
                                 showsVerticalScrollIndicator={false}
                                 >
+                                <View style={style.main}>
+                                    <Image source={{ uri:'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}}
+                                        style={style.logo}  />
+                                </View>
                                 <View style={style.row}>
                                     <Text style={style.titleInsc}>Inscription </Text>
                                 </View>
