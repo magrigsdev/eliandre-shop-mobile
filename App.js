@@ -1,18 +1,8 @@
- 
-import Stack from "./navigations/stack";
-import Category from "./screens/categoryScreen";
-import SingupScreen from "./screens/signupScreen";
-import WelcomeScreen from "./screens/welcomeScreen";
-
+ import Stack from "./navigations/stack";
 
 export default function App() {
   
-
   return (
-    // <WelcomeScreen/>
-    // <Category/>
-    // <SingupScreen/>
-
     <Stack/>
   );
 }
