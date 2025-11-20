@@ -2,7 +2,7 @@ import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-nativ
 import { style } from "../styles/signupStyle"
 import { useState } from "react"
 
-const SingupScreen = () => {
+const SingupScreen = ({navigation}) => {
     // HOOKS INITIATION 
     const [formData, setFormData] = useState({email:'', mtp:''})
     const [errors, setErrors] = useState({})
@@ -139,7 +139,7 @@ const SingupScreen = () => {
                         <Text style={style.text_end}>Pas de compte ?
                         <Pressable
                         style={{paddingTop:10}}
-                        onPress={()=>navigation.goBack('Inscription')}
+                        onPress={()=>navigation.navigate('register')}
                         >
                         <Text style={style.text_end_colored}> S'inscrire </Text>
                         </Pressable> 
