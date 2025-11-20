@@ -72,21 +72,25 @@ const SingupScreen = ({navigation}) => {
     
 
     //*********** HANDLE ON SUBMIT */
-    const handleOnSubmit = () => {
+//     const handleOnSubmit = () => {
 
-        if(Validation()){ 
-            if(VerifUser(formData.nom, formData.email) !== null)
-            {
-                navigation.replace('home')
-            }
-            console.log("login success")
-        } 
-        else {
-            console.log("failed")
-        }
-        setFormData({email:'', mtp:''})
+//         if(Validation()){ 
+//             if(VerifUser(formData.nom, formData.email) !== null)
+//             {
+//                 navigation.replace('home')
+//             }
+//             console.log("login success")
+//         } 
+//         else {
+//             console.log("failed")
+//         }
+//         setFormData({email:'', mtp:''})
           
-   }
+//    }
+    const handleOnSubmit = () => {
+        navigation.replace('tabs')
+    }
+
         return ( 
             
         <View style={style.main}>

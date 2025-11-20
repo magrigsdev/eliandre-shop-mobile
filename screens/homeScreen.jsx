@@ -3,7 +3,7 @@
 import { Text, View,Image, Pressable } from "react-native"
 import { style } from './../styles/welcomeStyle';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
     return (
         <View style={style.main}>
         
@@ -19,12 +19,7 @@ const HomeScreen = ({navigation}) => {
                 resizeMode="contain"
                 style={style.bienvenue}
                 />
-            <Pressable 
-                    onPress={()=> navigation.replace('signup')}
-                    style={style.button}
-                >
-                    <Text style={style.buttonText}>Commencez</Text>
-            </Pressable>
+            
         </View>)
 }
 export default HomeScreen
