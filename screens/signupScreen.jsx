@@ -68,6 +68,7 @@ const SingupScreen = ({navigation}) => {
 
         return Object.keys(newError).length === 0
     }
+    
 
     //*********** HANDLE ON SUBMIT */
     const handleOnSubmit = () => {
