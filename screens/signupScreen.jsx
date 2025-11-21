@@ -2,11 +2,14 @@ import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-nativ
 import { style } from "../styles/signupStyle"
 import { useState } from "react"
 import { VerifUser } from "../database/tasks"
+import { CustomerContext, User, UserConext } from "./welcomeScreen"
 
 const SingupScreen = ({navigation}) => {
     // HOOKS INITIATION 
     const [formData, setFormData] = useState({email:'', mtp:''})
     const [errors, setErrors] = useState({})
+    const [user, setUser] = useState("Andréa")
+    
 
 
     
@@ -72,24 +75,33 @@ const SingupScreen = ({navigation}) => {
     
 
     //*********** HANDLE ON SUBMIT */
-//     const handleOnSubmit = () => {
+        //     const handleOnSubmit = () => {
 
-//         if(Validation()){ 
-//             if(VerifUser(formData.nom, formData.email) !== null)
-//             {
-//                 navigation.replace('home')
-//             }
-//             console.log("login success")
-//         } 
-//         else {
-//             console.log("failed")
-//         }
-//         setFormData({email:'', mtp:''})
-          
-//    }
+        //         if(Validation()){ 
+        //             if(VerifUser(formData.nom, formData.email) !== null)
+        //             {
+        //                 navigation.replace('tabs')
+        //             }
+        //             console.log("login success")
+        //         } 
+        //         else {
+        //             console.log("failed")
+        //         }
+        //         setFormData({email:'', mtp:''})
+                
+        //    }
+    //********* temporaire */
+    
+    // formData.nom  && setUser(formData.nom)
+    //fonction temporaire
+    
+    //
+   
+
     const handleOnSubmit = () => {
-        navigation.replace('tabs')
+            navigation.replace('tabs')    
     }
+    
 
         return ( 
             

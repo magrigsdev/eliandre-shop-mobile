@@ -1,8 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Ionicons } from "@expo/vector-icons"
 import HomeScreen from "../screens/homeScreen"
-import Category from "../screens/categoryScreen"
-import Stack from "./stack"
 import CategoryScreen from "../screens/categoryScreen"
 import PanierScreen from "../screens/panierScreen"
 import ProfilScreen from "../screens/profilScreen"
@@ -12,6 +10,7 @@ const Tab =  createBottomTabNavigator()
 
 export const Tabs = () => {
 
+   
     return (<>
             <Tab.Navigator
             initialRouteName="home"
@@ -38,7 +37,11 @@ export const Tabs = () => {
                 }
             })} 
             >
-                <Tab.Screen name="home" component={HomeScreen} />
+                <Tab.Screen 
+                    name="home" 
+                    component={HomeScreen}
+                       
+                />
                 <Tab.Screen name="category" component={CategoryScreen} />
                 <Tab.Screen name="panier" component={PanierScreen} />
                 <Tab.Screen name="profil" component={ProfilScreen} />

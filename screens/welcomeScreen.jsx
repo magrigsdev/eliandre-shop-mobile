@@ -1,5 +1,7 @@
 import { Text, View,Image, Pressable } from "react-native"
 import { style } from './../styles/welcomeStyle';
+
+
 const WelcomeScreen = ({navigation}) => {
     return (
         <View style={style.main}>
@@ -11,6 +13,7 @@ const WelcomeScreen = ({navigation}) => {
                 <Text style={style.text_2}>Bienvenue sur Eliandre shop</Text>
                 <Text style={style.text_1}>Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.</Text>
             </View>
+
             <Image 
                 source={require('../assets/bienvenue.jpg')}
                 resizeMode="contain"

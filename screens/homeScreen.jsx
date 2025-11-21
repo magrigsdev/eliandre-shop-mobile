@@ -1,9 +1,10 @@
-
-
-import { Text, View,Image, Pressable } from "react-native"
+import { Text, View,Image, } from "react-native"
 import { style } from './../styles/welcomeStyle';
 
+
 const HomeScreen = () => {
+    
+    
     return (
         <View style={style.main}>
         
@@ -11,7 +12,7 @@ const HomeScreen = () => {
             source={{ uri:'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}}
             style={style.logo}  />
             <View style={style.contain}>
-                <Text style={style.text_2}>Bienvenue sur Eliandre shop</Text>
+                <Text style={style.text_2}>Salut !  </Text>
                 <Text style={style.text_1}>Découvrez Eliandre Shop, votre boutique en ligne dédiée à l’élégance et à la beauté.</Text>
             </View>
             <Image 
