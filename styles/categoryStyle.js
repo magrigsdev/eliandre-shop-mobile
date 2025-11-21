@@ -2,7 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
     padding: 10,
     marginVertical: 8,

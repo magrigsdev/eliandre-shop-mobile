@@ -1,12 +1,36 @@
-import { FlatList, View, Text, TextInput, Image } from "react-native";
-import { styles } from "../styles/categoryStyle";
+import {TouchableOpacity, FlatList, View, Text, TextInput, Image, Button, Pressable } from "react-native";
+// import { style } from "../styles/categoryStyle";
+import { style } from "../styles/sacsStyle";
 import { useEffect, useState } from "react";
+import Sacs from "./sacs";
 
 const CategoryScreen = () => {
     //HOOKS
     const [recherche, setRecherche] = useState("") 
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
+
+    const [panier, setpanier] = useState([])
+    const [quantite, setQuantite] = useState(0)
+   
+
+    
+    // const ajoutePanier = (panier) => {
+    //     setpanier((prev) => [...prev, panier])
+    // }
+    //fonction qui ajoute le produit
+    const ajoutePanier = (item)=>{
+        setQuantite(quantite + 1)
+        console.log(item._id)
+    }
+    const enleverPanier = (item)=>{
+        if(quantite > 0){
+            setQuantite(quantite - 1)
+        }
+        console.log(item._id)
+
+    }
+    console.log(quantite)
 
      useEffect(() => { 
         const chargerSacs = async () => {
@@ -32,11 +56,22 @@ const CategoryScreen = () => {
     chargerSacs();
     }, []);
 
+        // // afficher un message au recherche
+        // const [message, setMesssage] = useState("")
+        // useEffect(()=>{
+        //     if(sacsFiltres.length == 0){
+        //         setMesssage("Aucun donnée ne correspond")
+        //     }
+        // },recherche)
+
+    
         //function rechreche.
         const sacsFiltres = sacs.filter(p =>
             p.libelle.toLowerCase().includes(recherche.toLowerCase())
         );
    return (<>
+                
+                {/* button recherche */}
                 <View style={{margin:50,}}>
                     <TextInput 
                     placeholder="Rechercher un sac..."
@@ -50,29 +85,36 @@ const CategoryScreen = () => {
                     marginBottom: 10,
                     }}
                 />
+                {/* {message && <Text> {message} </Text>} */}
+                      
+                    <View style={style.container}>
+                            <Text style={style.title}>Liste des Produits</Text>
+                    </View>
                 </View>
-   
-                <FlatList 
-                    // data={produits}
-                    data={sacsFiltres}
-                    
-                    keyExtractor={item => item._id}
-                    renderItem={({ item }) => (
+                {/* <Text style={style.cartText}>🧺 article */}
+                {/* {panier.length > 1 && "s"} {panier.length}</Text> */}
 
-                <View style={styles.container}> 
-                    <Text style={styles.nomProduit}>{item.libelle}</Text>
-                    <Text style={styles.detailsProduit}>
-                                {item.prix} €
-                    </Text>
-                    <Text style={styles.description}>{item.description}</Text>
-                    <Image style={{ width:158, height:139,}}
-                     source={{ uri:item.image}} 
+                <View style={style.container}>
 
-                     />
-                    
-                </View>
-                    )}
-                    />
+                
+                    <FlatList 
+                        // data={produits}
+                        data={sacsFiltres}
+                        keyExtractor={item => item._id}
+                        renderItem={({ item }) => (
+
+                        <Sacs 
+                            item={item} 
+                            onAddToCart={()=>{ajoutePanier(item)}}
+                            quantite = {quantite}  
+                            onDeleteToCart={()=>{enleverPanier(item)}} 
+                            />) }
+                            ItemSeparatorComponent={<View style={style.separator}
+                            
+                             />}
+                            contentContainerStyle={style.list}  
+                        />
+                    </View>
                 </>);
 
 }

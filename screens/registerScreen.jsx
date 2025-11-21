@@ -37,11 +37,10 @@ const RegisterScreen = ({navigation}) => {
             const validatePrenom = () => {
                 let erreur = ""
                 if(typeof formData.prenom !== "undefined"){
-                if(formData.prenom.trim() =='') 
-                        erreur = "le prénom est requis"
-                    
-                }
-                    
+                    if(formData.prenom.trim() =='') 
+                            erreur = "le prénom est requis"
+                        
+                    }  
                 else erreur = "le prénom est requis"
                 return erreur
             }
@@ -159,7 +158,7 @@ const RegisterScreen = ({navigation}) => {
             return validation
         }
         //****************** BASE DE DONNEES */
-        useEffect(() => { useEffect
+        useEffect(() => { 
             const setupDB = async () => {
                 try {
                     await InitDB(); 
@@ -169,7 +168,6 @@ const RegisterScreen = ({navigation}) => {
             };
             setupDB();
         }, []);
-
         //*********** HANDLE ON SUBMIT */
         const handleOnSubmit = async () => {
             
@@ -218,6 +216,7 @@ const RegisterScreen = ({navigation}) => {
                                     <Image source={{ uri:'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}}
                                         style={style.logo}  />
                                 </View>
+                                
                                 <View style={style.row}>
                                     <Text style={style.titleInsc}>Inscription </Text>
                                 </View>
