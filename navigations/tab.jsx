@@ -1,8 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Ionicons } from "@expo/vector-icons"
 import HomeScreen from "../screens/homeScreen"
-import Category from "../screens/categoryScreen"
-import Stack from "./stack"
 import CategoryScreen from "../screens/categoryScreen"
 import PanierScreen from "../screens/panierScreen"
 import ProfilScreen from "../screens/profilScreen"
@@ -10,7 +8,11 @@ import ProfilScreen from "../screens/profilScreen"
 
 const Tab =  createBottomTabNavigator()
 
-export const Tabs = () => {
+export const Tabs = ({route}) => {
+
+    //recupère l'email de l'utilisateur via route.params
+    const user = route.params?.nom
+    console.log("Email de l'utilisateur : ", user)
 
     return (<>
             <Tab.Navigator
@@ -25,20 +27,24 @@ export const Tabs = () => {
                     if(route.name === 'home'){
                         iconName = 'home'
                     }
-                    else if (route.name == 'category'){
+                    else if (route.name === 'category'){
                         iconName = 'grid'
                     }
-                    else if (route.name == 'panier'){
+                    else if (route.name === 'panier'){
                         iconName = 'basket'
                     }
-                    else if (route.name == 'profil'){
+                    else if (route.name === 'profil'){
                         iconName = 'person'
                     }
                     return <Ionicons name={iconName} size={size} color={color}/>
                 }
             })} 
             >
-                <Tab.Screen name="home" component={HomeScreen} />
+                <Tab.Screen  
+                    name="home"
+                    // component={HomeScreen}
+                    children={()=><HomeScreen nom={user}/>}
+                  />
                 <Tab.Screen name="category" component={CategoryScreen} />
                 <Tab.Screen name="panier" component={PanierScreen} />
                 <Tab.Screen name="profil" component={ProfilScreen} />

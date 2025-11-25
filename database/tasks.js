@@ -21,6 +21,8 @@ export const VerifUser = async (email, motDePasse) => {
     'SELECT * FROM Users WHERE Email = ? AND Password= ?;',
     [email, motDePasse]
   );
+  // console.log(email, motDePasse)
   return result.length > 0 ? result[0] : null;
+  
 };
 

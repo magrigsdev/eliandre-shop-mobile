@@ -1,14 +1,14 @@
-import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native"
+import { Alert, Image, Pressable, ScrollView, Text, TextInput, View } from "react-native"
 import { style } from "../styles/signupStyle"
 import { useState } from "react"
 import { VerifUser } from "../database/tasks"
 
+
 const SingupScreen = ({navigation}) => {
+
     // HOOKS INITIATION 
     const [formData, setFormData] = useState({email:'', mtp:''})
     const [errors, setErrors] = useState({})
-
-
     
     // function to valid email and return boolean : true or false
     const emailValidate = (email) => {
@@ -70,26 +70,36 @@ const SingupScreen = ({navigation}) => {
         return Object.keys(newError).length === 0
     }
     
-
     //*********** HANDLE ON SUBMIT */
-//     const handleOnSubmit = () => {
+            const handleOnSubmit = async () => {
 
-//         if(Validation()){ 
-//             if(VerifUser(formData.nom, formData.email) !== null)
-//             {
-//                 navigation.replace('home')
-//             }
-//             console.log("login success")
-//         } 
-//         else {
-//             console.log("failed")
-//         }
-//         setFormData({email:'', mtp:''})
-          
-//    }
-    const handleOnSubmit = () => {
-        navigation.replace('tabs')
-    }
+                if(Validation()) {
+
+                    const error = {}
+                    const user = await VerifUser(formData.email, formData.mtp);
+
+                    if(user){
+                        console.log("User found : ", user)
+                        Alert.alert("Connexion reussi.")
+                        navigation.replace('tabs', {nom: user.Nom})
+                    }
+                    else {
+                        console.log("User not found : ", user, formData)
+                        error.email = "Email n'existe pas !"
+                        error.mtp = "Mot de passe ne correspond pas !"
+                    }
+
+                    setErrors(error)
+                    setFormData({email: null, mtp: null})
+                }
+                
+            }
+   
+    //temporaire ...
+    // const handleOnSubmit = () => {
+    //         navigation.replace('tabs')    
+    // }
+    
 
         return ( 
             
