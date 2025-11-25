@@ -3,7 +3,7 @@ import { style } from "../styles/sacsStyle";
 
 const prix = 100;
 // Composant pour afficher un produit.
-const Sacs = ({item, onAddToCart, onDeleteToCart, quantite}) => (
+const Sacs = ({item, onAddToCart, quantite}) => (
     
   <View style={style.articleContainer} >
     <Image source={{ uri: item.image}} style={style.image}/>
@@ -12,15 +12,14 @@ const Sacs = ({item, onAddToCart, onDeleteToCart, quantite}) => (
       <Text style={style.info}>{item.description}</Text>
       <Text style={[item.prix > prix ? style.prixUp : style.prixDown]}>{item.prix} €</Text>
       
-        <View style={{flexDirection: "row",
-    alignItems: "center",}}>
+        <View style={{
+          flexDirection: "row",
+          alignItems: "center",
+          }}>
             <Pressable onPress={onAddToCart} style={{ padding: 10 }}> 
-                <Text>➕</Text>
+                <Text>➕ Ajouter</Text>
             </Pressable>
                 <Text style={style.nom}>{quantite}</Text>
-            <Pressable onPress={onDeleteToCart} style={{ padding: 10 }}>
-                <Text>➖</Text>
-            </Pressable>
         </View>
         
 

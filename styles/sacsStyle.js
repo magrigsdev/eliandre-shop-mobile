@@ -109,7 +109,7 @@ export const style = StyleSheet.create({
   cartText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom:20
+    margin:20
   },
  
   

@@ -1,4 +1,4 @@
-const PanierScreen = () => {
+const PanierScreen = ({Article}) => {
     return null
 }
 export default PanierScreen
