@@ -180,12 +180,11 @@ const RegisterScreen = ({navigation}) => {
                                 formData.nom, 
                                 formData.prenom,
                                 formData.email,
-                                formData.telephone,
-                                formData.mtp);
-                                Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom}
-                              ${formData.nom} !`);
+                                formData.mtp,
+                                formData.telephone);
+                                Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom} ${formData.nom} !`);
 
-                        navigation.replace('home')
+                        navigation.replace('tabs', formData.prenom)
                         setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
                     } 
                     catch (error) {

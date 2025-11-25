@@ -1,17 +1,14 @@
-import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native"
+import { Alert, Image, Pressable, ScrollView, Text, TextInput, View } from "react-native"
 import { style } from "../styles/signupStyle"
 import { useState } from "react"
 import { VerifUser } from "../database/tasks"
-import { CustomerContext, User, UserConext } from "./welcomeScreen"
-import { Child, Parent } from "../components/userName"
+
 
 const SingupScreen = ({navigation}) => {
+
     // HOOKS INITIATION 
     const [formData, setFormData] = useState({email:'', mtp:''})
     const [errors, setErrors] = useState({})
-    
-
-
     
     // function to valid email and return boolean : true or false
     const emailValidate = (email) => {
@@ -73,23 +70,31 @@ const SingupScreen = ({navigation}) => {
         return Object.keys(newError).length === 0
     }
     
-
     //*********** HANDLE ON SUBMIT */
-            const handleOnSubmit = () => {
+            const handleOnSubmit = async () => {
 
-                if(Validation()){ 
-                    if(VerifUser(formData.email, formData.mtp) !== null)
-                    {
-                        navigation.replace('tabs', )
+                if(Validation()) {
+
+                    const error = {}
+                    const user = await VerifUser(formData.email, formData.mtp);
+                    console.log("User found : ", user)
+
+                    if(user){
+                        console.log("User found : ", user, formData)
+                        Alert.alert("Connexion reussi.")
+                        navigation.replace('tabs', formData.email)
                     }
-                    console.log("login success")
-                } 
-                else {
-                    console.log("failed")
+                    else {
+                        console.log("User not found : ", user, formData)
+                        error.email = "Email n'existe pas !"
+                        error.mtp = "Mot de passe ne correspond pas !"
+                    }
+
+                    setErrors(error)
+                    setFormData({email: null, mtp: null})
                 }
-                setFormData({email:'', mtp:''})
                 
-           }
+            }
    
     //temporaire ...
     // const handleOnSubmit = () => {
@@ -121,7 +126,7 @@ const SingupScreen = ({navigation}) => {
                             placeholder="email"
                             autoCapitalize="words"
                             autoCorrect={false}
-                            // keyboardType="default"
+                            keyboardType="default"
                             value={formData.email}
                             onChangeText = {(value)=> handleOnChange('email',value)}
                         />
