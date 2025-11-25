@@ -184,7 +184,7 @@ const RegisterScreen = ({navigation}) => {
                                 formData.telephone);
                                 Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom} ${formData.nom} !`);
 
-                        navigation.replace('tabs', formData.prenom)
+                        navigation.replace('tabs')
                         setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
                     } 
                     catch (error) {

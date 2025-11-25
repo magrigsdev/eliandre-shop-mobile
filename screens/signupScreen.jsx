@@ -82,7 +82,7 @@ const SingupScreen = ({navigation}) => {
                     if(user){
                         console.log("User found : ", user, formData)
                         Alert.alert("Connexion reussi.")
-                        navigation.replace('tabs', formData.email)
+                        navigation.replace('tabs')
                     }
                     else {
                         console.log("User not found : ", user, formData)

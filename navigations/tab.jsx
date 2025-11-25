@@ -24,24 +24,20 @@ export const Tabs = () => {
                     if(route.name === 'home'){
                         iconName = 'home'
                     }
-                    else if (route.name == 'category'){
+                    else if (route.name === 'category'){
                         iconName = 'grid'
                     }
-                    else if (route.name == 'panier'){
+                    else if (route.name === 'panier'){
                         iconName = 'basket'
                     }
-                    else if (route.name == 'profil'){
+                    else if (route.name === 'profil'){
                         iconName = 'person'
                     }
                     return <Ionicons name={iconName} size={size} color={color}/>
                 }
             })} 
             >
-                <Tab.Screen 
-                    name="home" 
-                    component={HomeScreen}
-                       
-                />
+                <Tab.Screen  name="home" component={HomeScreen} />
                 <Tab.Screen name="category" component={CategoryScreen} />
                 <Tab.Screen name="panier" component={PanierScreen} />
                 <Tab.Screen name="profil" component={ProfilScreen} />
