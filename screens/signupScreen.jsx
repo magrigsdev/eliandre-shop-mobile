@@ -77,12 +77,11 @@ const SingupScreen = ({navigation}) => {
 
                     const error = {}
                     const user = await VerifUser(formData.email, formData.mtp);
-                    console.log("User found : ", user)
 
                     if(user){
-                        console.log("User found : ", user, formData)
+                        console.log("User found : ", user)
                         Alert.alert("Connexion reussi.")
-                        navigation.replace('tabs')
+                        navigation.replace('tabs', {nom: user.Nom})
                     }
                     else {
                         console.log("User not found : ", user, formData)
