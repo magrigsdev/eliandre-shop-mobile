@@ -5,37 +5,35 @@ import { useEffect, useState } from "react";
 import Sacs from "./sacs";
 
 const CategoryScreen = () => {
+
     //HOOKS
     const [recherche, setRecherche] = useState("") 
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
 
-    const [panier, setpanier] = useState([])
+    const [panier, setPanier] = useState([])
     const [quantite, setQuantite] = useState(0)
    
-
-    
-    // const ajoutePanier = (panier) => {
-    //     setpanier((prev) => [...prev, panier])
-    // }
     //fonction qui ajoute le produit
     const ajoutePanier = (item)=>{
-        setQuantite(quantite + 1)
-        console.log(item._id)
+        //ajoute le produit dans le panier
+       setPanier(prev => {
+            //verifier si le produit existe dans le panier
+            const exist = prev.find(x => x.id === item.id)
+            if(exist){
+                // si il existe on augmente la quantité
+                return prev.map(x => x.id === item.id ? {...exist, quantite: exist.quantite + 1} : x)
+            }
+            return [...prev, {...item, quantite: 1}]    
+       })
     }
-    const enleverPanier = (item)=>{
-        if(quantite > 0){
-            setQuantite(quantite - 1)
-        }
-        console.log(item._id)
 
-    }
     console.log(quantite)
 
      useEffect(() => { 
         const chargerSacs = async () => {
             try {
-            const res = await fetch('http://172.16.19.55:3000/api/sacs');
+            const res = await fetch('http://192.168.1.10:3000/api/sacs');
             console.info("connecté ...")
         
             if (!res.ok) {
@@ -50,6 +48,7 @@ const CategoryScreen = () => {
             setErreur(err.message); // capture et affichage de l’erreur
             } finally {
             // setLoading(false); // fin du chargement dans tous les cas
+            console.warn("api a été appelle")
             }
         };
     
@@ -69,6 +68,7 @@ const CategoryScreen = () => {
         const sacsFiltres = sacs.filter(p =>
             p.libelle.toLowerCase().includes(recherche.toLowerCase())
         );
+
    return (<>
                 
                 {/* button recherche */}
@@ -91,12 +91,15 @@ const CategoryScreen = () => {
                             <Text style={style.title}>Liste des Produits</Text>
                     </View>
                 </View>
-                {/* <Text style={style.cartText}>🧺 article */}
-                {/* {panier.length > 1 && "s"} {panier.length}</Text> */}
+
+                <View>
+                    <Text style={style.cartText}>🧺 Sacs : 
+                        {panier.length > 1 && "s"} {panier.length}
+                    </Text>
+                </View>
+                
 
                 <View style={style.container}>
-
-                
                     <FlatList 
                         // data={produits}
                         data={sacsFiltres}
@@ -105,9 +108,9 @@ const CategoryScreen = () => {
 
                         <Sacs 
                             item={item} 
+                            //recupère le produit et les details.
                             onAddToCart={()=>{ajoutePanier(item)}}
                             quantite = {quantite}  
-                            onDeleteToCart={()=>{enleverPanier(item)}} 
                             />) }
                             ItemSeparatorComponent={<View style={style.separator}
                             
