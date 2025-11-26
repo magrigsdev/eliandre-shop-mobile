@@ -11,18 +11,21 @@ const CategoryScreen = () => {
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
 
-    const [panier, setpanier] = useState([])
+    const [panier, setPanier] = useState([])
     const [quantite, setQuantite] = useState(0)
    
-
-    
-    // const ajoutePanier = (panier) => {
-    //     setpanier((prev) => [...prev, panier])
-    // }
     //fonction qui ajoute le produit
     const ajoutePanier = (item)=>{
-        setQuantite(quantite + 1)
-        console.log(" quantite +1 : ",item._id)
+        //ajoute le produit dans le panier
+       setPanier(prev => {
+            //verifier si le produit existe dans le panier
+            const exist = prev.find(x => x.id === item.id)
+            if(exist){
+                // si il existe on augmente la quantité
+                return prev.map(x => x.id === item.id ? {...exist, quantite: exist.quantite + 1} : x)
+            }
+            return [...prev, {...item, quantite: 1}]    
+       })
     }
 
     console.log(quantite)
@@ -105,6 +108,7 @@ const CategoryScreen = () => {
 
                         <Sacs 
                             item={item} 
+                            //recupère le produit et les details.
                             onAddToCart={()=>{ajoutePanier(item)}}
                             quantite = {quantite}  
                             />) }
