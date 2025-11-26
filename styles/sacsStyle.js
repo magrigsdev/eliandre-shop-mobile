@@ -30,12 +30,18 @@ export const style = StyleSheet.create({
     borderRadius: 8,
   },
   info: {
-    marginLeft: 12,
+    padding: 0,
     justifyContent: 'center',
+    width: '90%',
   },
- nom: {
+  nom: {
     fontSize: 18,
     fontWeight: '500',
+  },
+  quantite: {
+    fontSize: 20,
+    fontWeight: '500',
+    marginTop: 10,
   },
   prix: {
     fontSize: 16,
@@ -55,11 +61,13 @@ export const style = StyleSheet.create({
   bouton: {
     backgroundColor: '#008080',
     height: 50,
-    borderRadius: 8,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+    width: 100,
     shadowColor: '#000',
+    color: '#fff',
     shadowOffset: {
       width: 0,
       height: 2,

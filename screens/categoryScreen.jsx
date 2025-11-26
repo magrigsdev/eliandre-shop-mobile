@@ -1,8 +1,8 @@
-import {TouchableOpacity, FlatList, View, Text, TextInput, Image, Button, Pressable } from "react-native";
+import { FlatList, View, Text, TextInput } from "react-native";
 // import { style } from "../styles/categoryStyle";
 import { style } from "../styles/sacsStyle";
 import { useEffect, useState } from "react";
-import Sacs from "./sacs";
+import Sacs from "../components/sacs";
 
 const CategoryScreen = () => {
 
@@ -29,24 +29,27 @@ const CategoryScreen = () => {
     }
 
     console.log(quantite)
-
+    //appel du api sec
      useEffect(() => { 
         const chargerSacs = async () => {
             try {
-            const res = await fetch('http://192.168.1.10:3000/api/sacs');
-            console.info("connecté ...")
-        
-            if (!res.ok) {
-                //throw = lancer une erreur (interruption immédiate).
-                // new Error() = créer un objet erreur avec message, nom et stack.
-                throw new Error("Sacs introuvable");
-            }
-        
-            const data = await res.json();
-            setSacs(data); // mise à jour de l’état avec les données reçues
-            } catch (err) {
-            setErreur(err.message); // capture et affichage de l’erreur
-            } finally {
+                //const res = await fetch('http://192.168.1.10:3000/api/sacs');
+                const res = await fetch('http://172.20.10.2:3000/api/sacs'); //adress ip
+                console.info("connecté ...")
+            
+                if (!res.ok) {
+                    //throw = lancer une erreur (interruption immédiate).
+                    // new Error() = créer un objet erreur avec message, nom et stack.
+                    throw new Error("Sacs introuvable");
+                }
+            
+                const data = await res.json();
+                setSacs(data); // mise à jour de l’état avec les données reçues
+                } 
+            catch (err) {
+                setErreur(err.message); // capture et affichage de l’erreur
+                } 
+            finally {
             // setLoading(false); // fin du chargement dans tous les cas
             console.warn("api a été appelle")
             }
@@ -54,24 +57,16 @@ const CategoryScreen = () => {
     
     chargerSacs();
     }, []);
-
-        // // afficher un message au recherche
-        // const [message, setMesssage] = useState("")
-        // useEffect(()=>{
-        //     if(sacsFiltres.length == 0){
-        //         setMesssage("Aucun donnée ne correspond")
-        //     }
-        // },recherche)
-
-    
-        //function rechreche.
-        const sacsFiltres = sacs.filter(p =>
-            p.libelle.toLowerCase().includes(recherche.toLowerCase())
+   
+    //function rechreche.
+    const sacsFiltres = sacs.filter(p =>
+        p.libelle.toLowerCase().includes(recherche.toLowerCase())
         );
 
    return (<>
                 
-                {/* button recherche */}
+            {/* button recherche */}
+
                 <View style={{margin:50,}}>
                     <TextInput 
                     placeholder="Rechercher un sac..."
@@ -80,17 +75,14 @@ const CategoryScreen = () => {
                     style={{
                     borderWidth: 1,
                     borderColor: '#110404ff',
-                    borderRadius: 5,
+                    borderRadius: 20,
                     padding: 8,
                     marginBottom: 10,
                     }}
                 />
-                {/* {message && <Text> {message} </Text>} */}
-                      
-                    <View style={style.container}>
-                            <Text style={style.title}>Liste des Produits</Text>
-                    </View>
+                
                 </View>
+                
 
                 <View>
                     <Text style={style.cartText}>🧺 Sacs : 
@@ -100,25 +92,32 @@ const CategoryScreen = () => {
                 
 
                 <View style={style.container}>
+                    {sacsFiltres.length == 0 ? 
+                        <View style={style.container}>
+                            <Text style={style.title}>Aucun donnée ne correspond</Text>
+                        </View>
+                    : null }
+
                     <FlatList 
                         // data={produits}
                         data={sacsFiltres}
                         keyExtractor={item => item._id}
                         renderItem={({ item }) => (
 
-                        <Sacs 
-                            item={item} 
-                            //recupère le produit et les details.
-                            onAddToCart={()=>{ajoutePanier(item)}}
-                            quantite = {quantite}  
-                            />) }
+                            <Sacs 
+                                item={item} 
+                                //recupère le produit et les details.
+                                onAddToCart={()=>{ajoutePanier(item)}}
+                                quantite = {quantite}  
+                                />
+                            ) }
                             ItemSeparatorComponent={<View style={style.separator}
                             
                              />}
                             contentContainerStyle={style.list}  
                         />
-                    </View>
-                </>);
+                </View>
+        </>);
 
 }
 export default CategoryScreen

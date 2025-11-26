@@ -1,4 +1,4 @@
-import {Image, Text, View, Button, Pressable } from "react-native";
+import {Image, Text, View, Pressable } from "react-native";
 import { style } from "../styles/sacsStyle";
 
 const prix = 100;
@@ -16,12 +16,12 @@ const Sacs = ({item, onAddToCart, quantite}) => (
           flexDirection: "row",
           alignItems: "center",
           }}>
-            <Pressable onPress={onAddToCart} style={{ padding: 10 }}> 
-                <Text>➕ Ajouter</Text>
+            <Pressable onPress={onAddToCart} style={style.bouton}> 
+                <Text style={{color: '#fff', fontSize: 18}}>Ajouter</Text>
             </Pressable>
-                <Text style={style.nom}>{quantite}</Text>
+              
         </View>
-        
+        <Text style={style.quantite }>{quantite}</Text>
 
     </View>
   </View>
