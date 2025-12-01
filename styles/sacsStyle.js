@@ -66,6 +66,7 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     width: 100,
+    marginRight: 10,
     shadowColor: '#000',
     color: '#fff',
     shadowOffset: {

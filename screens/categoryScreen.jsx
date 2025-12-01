@@ -1,4 +1,4 @@
-import { FlatList, View, Text, TextInput } from "react-native";
+import { FlatList, View, Text, TextInput, Alert } from "react-native";
 // import { style } from "../styles/categoryStyle";
 import { style } from "../styles/sacsStyle";
 import { useEffect, useState } from "react";
@@ -56,7 +56,15 @@ const CategoryScreen = () => {
         );
     
         
-
+    //FUNCTION AJOUTE PANIER 
+    const ajoutePanier = (item) => {
+        console.log(" function add chart clicked")
+    }
+    const AfficheDetails = (item) => {
+        
+        Alert.alert(item.libelle + " " + item.prix + " €")
+        console.log(item.libelle + " " + item.prix + " €")
+    }
    return (<>
                 
             {/* button recherche */}
@@ -102,6 +110,9 @@ const CategoryScreen = () => {
                                 item={item} 
                                 //recupère le produit et les details.
                                 onAddToCart={()=>{ajoutePanier(item)}}
+                                //show details
+                                onShowDetail={()=>{AfficheDetails(item)}}
+                                //quantity
                                 quantite = {quantite}  
                                 />
                             ) }
