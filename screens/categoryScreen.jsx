@@ -14,19 +14,10 @@ const CategoryScreen = () => {
     const [panier, setPanier] = useState([])
     const [quantite, setQuantite] = useState(0)
    
+// ...existing code...
     //fonction qui ajoute le produit
-    const ajoutePanier = (item)=>{
-        //ajoute le produit dans le panier
-       setPanier(prev => {
-            //verifier si le produit existe dans le panier
-            const exist = prev.find(x => x.id === item.id)
-            if(exist){
-                // si il existe on augmente la quantité
-                return prev.map(x => x.id === item.id ? {...exist, quantite: exist.quantite + 1} : x)
-            }
-            return [...prev, {...item, quantite: 1}]    
-       })
-    }
+
+// ...existing code...
 
     console.log(quantite)
     //appel du api sec
@@ -35,6 +26,7 @@ const CategoryScreen = () => {
             try {
                 //const res = await fetch('http://192.168.1.10:3000/api/sacs');
                 const res = await fetch('http://172.20.10.2:3000/api/sacs'); //adress ip
+                // const res = await fetch('http://localhost:3000/api/sacs'); //adress ip
                 console.info("connecté ...")
             
                 if (!res.ok) {
@@ -62,6 +54,8 @@ const CategoryScreen = () => {
     const sacsFiltres = sacs.filter(p =>
         p.libelle.toLowerCase().includes(recherche.toLowerCase())
         );
+    
+        
 
    return (<>
                 
@@ -85,8 +79,8 @@ const CategoryScreen = () => {
                 
 
                 <View>
-                    <Text style={style.cartText}>🧺 Sacs : 
-                        {panier.length > 1 && "s"} {panier.length}
+                    <Text style={style.cartText}>🧺 Sac 
+                        {panier.length > 1 && "s"} : {panier.length}
                     </Text>
                 </View>
                 
@@ -103,7 +97,7 @@ const CategoryScreen = () => {
                         data={sacsFiltres}
                         keyExtractor={item => item._id}
                         renderItem={({ item }) => (
-
+                            
                             <Sacs 
                                 item={item} 
                                 //recupère le produit et les details.
