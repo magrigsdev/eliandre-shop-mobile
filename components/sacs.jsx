@@ -2,6 +2,7 @@ import {Image, Text, View, Pressable } from "react-native";
 import { style } from "../styles/sacsStyle";
 
 const prix = 100;
+
 // Composant pour afficher un produit.
 const Sacs = ({item, onAddToCart, onShowDetail, quantite}) => (
     
