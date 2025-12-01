@@ -62,7 +62,7 @@ const CategoryScreen = () => {
     }
     const AfficheDetails = (item) => {
         
-        Alert.alert(item.libelle + " " + item.prix + " €")
+        Alert.alert("Détail du sac",`${item.libelle} \nPrix : ${item.prix} € `)
         console.log(item.libelle + " " + item.prix + " €")
     }
    return (<>
