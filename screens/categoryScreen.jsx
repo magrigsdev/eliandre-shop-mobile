@@ -30,7 +30,7 @@ const CategoryScreen = () => {
     );
 
     const AfficheDetails = (item) => {
-        Alert.alert("Détail du sac", `${item.libelle} \nPrix : ${item.prix} €`);
+        Alert.alert("Détail du sac", `${item.libelle} \n${item.prix} €`);
     };
 
     // ajoute ou incrémente la quantité dans le panier pour un item donné
@@ -72,7 +72,7 @@ const CategoryScreen = () => {
             </View>
 
             <View>
-                <Text style={style.cartText}>🧺 Sac
+                <Text style={style.cartText}>🛒 Sac
                     {totalItems > 1 && "s"} : {totalItems}
                 </Text>
             </View>
@@ -92,7 +92,7 @@ const CategoryScreen = () => {
                             item={item}
                             onAddToCart={() => { ajoutePanier(item); }}
                             onShowDetail={() => { AfficheDetails(item); }}
-                            quantite={"🚧 " + getQuantityById(item)}
+                            quantite={"🛒 " + getQuantityById(item)}
                         />
                     )}
                     ItemSeparatorComponent={<View style={style.separator} />}
