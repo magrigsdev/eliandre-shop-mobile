@@ -2,20 +2,19 @@ import { FlatList, View, Text, TextInput, Alert } from "react-native";
 import { style } from "../styles/sacsStyle";
 import { useEffect, useState } from "react";
 import Sacs from "../components/sacs";
+import { usePanier } from "../context/panierProvider";
 
 const CategoryScreen = () => {
     const [recherche, setRecherche] = useState("");
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
 
-    // panier contient les items avec leur champ quantity
-    const [panier, setPanier] = useState([]);
-
+    const { ajoutePanier, getQuantityById, totalItems } = usePanier();
     useEffect(() => {
         const chargerSacs = async () => {
             try {
                 const res = await fetch('http://192.168.1.14:3000/api/sacs');
-                if (!res.ok) throw new Error("Sacs introuvable");
+                if (!res.ok) throw new Error("Sacs introuvables");
                 const data = await res.json();
                 setSacs(data);
             } catch (err) {
@@ -25,6 +24,7 @@ const CategoryScreen = () => {
         chargerSacs();
     }, []);
 
+    //filter les sacs
     const sacsFiltres = sacs.filter(p =>
         p.libelle.toLowerCase().includes(recherche.toLowerCase())
     );
@@ -32,27 +32,6 @@ const CategoryScreen = () => {
     const AfficheDetails = (item) => {
         Alert.alert("Détail du sac", `${item.libelle} \n${item.prix} €`);
     };
-
-    // ajoute ou incrémente la quantité dans le panier pour un item donné
-    const ajoutePanier = (item) => {
-        setPanier(prev => {
-            const exist = prev.find(p => p._id === item._id);
-            if (exist) {
-                return prev.map(p =>
-                    p._id === item._id ? { ...p, quantity: p.quantity + 1 } : p
-                );
-            }
-            return [...prev, { ...item, quantity: 1 }];
-        });
-    };
-
-    // obtient la quantité courante pour un item depuis le panier
-    const getQuantityById = (item) => {
-        return panier.find(p => p._id === item._id)?.quantity || 0;
-    };
-
-    // nombre total d'articles (somme des quantités)
-    const totalItems = panier.reduce((sum, p) => sum + (p.quantity || 0), 0);
 
     return (
         <>
@@ -72,35 +51,35 @@ const CategoryScreen = () => {
             </View>
 
             <View>
-                <Text style={style.cartText}>🛒 Sac
-                    {totalItems > 1 && "s"} : {totalItems}
+                <Text style={style.cartText}>
+                    🛒 Sac{totalItems > 1 ? "s" : ""} : {totalItems}
                 </Text>
             </View>
 
             <View style={style.container}>
-                {sacsFiltres.length == 0 ?
-                    <View style={style.container}>
-                        <Text style={style.title}>Aucun donnée ne correspond</Text>
-                    </View>
-                    : null}
+                {erreur && <Text style={style.title}>{erreur}</Text>}
 
-                <FlatList
-                    data={sacsFiltres}
-                    keyExtractor={item => item._id}
-                    renderItem={({ item }) => (
-                        <Sacs
-                            item={item}
-                            onAddToCart={() => { ajoutePanier(item); }}
-                            onShowDetail={() => { AfficheDetails(item); }}
-                            quantite={"🛒 " + getQuantityById(item)}
-                        />
-                    )}
-                    ItemSeparatorComponent={<View style={style.separator} />}
-                    contentContainerStyle={style.list}
-                />
+                {sacsFiltres.length === 0 && !erreur ? (
+                    <Text style={style.title}>Aucune donnée ne correspond</Text>
+                ) : (
+                    <FlatList
+                        data={sacsFiltres}
+                        keyExtractor={item => item._id}
+                        renderItem={({ item }) => (
+                            <Sacs
+                                item={item}
+                                onAddToCart={() => ajoutePanier(item)}
+                                onShowDetail={() => AfficheDetails(item)}
+                                quantite={"🛒 " + getQuantityById(item)}
+                            />
+                        )}
+                        ItemSeparatorComponent={<View style={style.separator} />}
+                        contentContainerStyle={style.list}
+                    />
+                )}
             </View>
         </>
     );
-}
+};
 
 export default CategoryScreen;

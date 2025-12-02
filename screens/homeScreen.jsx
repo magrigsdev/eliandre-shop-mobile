@@ -2,7 +2,7 @@ import { Text, View,Image, } from "react-native"
 import { style } from './../styles/welcomeStyle';
 
 const HomeScreen = ({nom}) => {
-     console.log("dans home le nom est  : ", nom)
+     
     return (
         <View style={style.main}>
         

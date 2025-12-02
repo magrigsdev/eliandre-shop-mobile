@@ -1,10 +1,13 @@
-import { createContext,  useCallback, useContext, useMemo } from "react";
+import { createContext,  useCallback, useContext, useMemo, useState } from "react";
+import Sacs from './../components/sacs';
 
 const PanierContext = createContext()
 
 export const PanierProvider = ({children}) => {
     //list des objets
-    const [panier, setPanier] = useState([])
+    const [panier, setPanier] = useState([]) 
+    //temp
+    
 
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
@@ -20,24 +23,31 @@ export const PanierProvider = ({children}) => {
     },[])
 
     //calcule le total des articles
-    const totalItems = useMemo(()=>panier.reduce((sum, p) => sum + (p.quantity || 0), 0), [cart])
+    const totalItems = useMemo(()=>panier.reduce((sum, p) => sum + (p.quantity || 0), 0), [panier])
 
     //total des produit dans le panier
     const totalPrice = useMemo(
       ()=> panier.reduce((sum, p) => 
         sum + (p.quantity || 0) * (p.prix ?? p.price ?? 0), 0)
-      ,[cart])
+      ,[panier])
 
     //obtenir la quantité courant
-    const getQuantity = useCallback((items, panier)=>{
-        return panier.find(p => p._id === items._id)?.quantity || 0;
-    },[panier])
+    const getQuantityById = useCallback((item) => {
+        if (!panier) return 0;
+        return panier.find(p => p._id === item._id)?.quantity || 0;
+      }, [panier]);
 
+    //   const sacsFiltres = sacs.filter(p =>
+    //     p.libelle.toLowerCase().includes(recherche.toLowerCase())
+    // );
+   
+    /*********** FIN */
     //on utlise memo
     const value = useMemo(
-      ()=>({panier, getQuantity, totalPrice, totalItems, ajoutePanier}),
-      [panier, getQuantity, totalPrice, totalItems, ajoutePanier ]
+      ()=>({getQuantityById, totalPrice, totalItems, ajoutePanier}),
+      [getQuantityById, totalPrice, totalItems, ajoutePanier ]
     )
+
     //return the context
     return (
       <PanierContext.Provider value={value}>
