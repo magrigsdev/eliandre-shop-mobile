@@ -1,124 +1,106 @@
-import {TouchableOpacity, FlatList, View, Text, TextInput, Image, Button, Pressable } from "react-native";
-// import { style } from "../styles/categoryStyle";
+import { FlatList, View, Text, TextInput, Alert } from "react-native";
 import { style } from "../styles/sacsStyle";
 import { useEffect, useState } from "react";
-import Sacs from "./sacs";
+import Sacs from "../components/sacs";
 
 const CategoryScreen = () => {
-
-    //HOOKS
-    const [recherche, setRecherche] = useState("") 
+    const [recherche, setRecherche] = useState("");
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
 
-    const [panier, setPanier] = useState([])
-    const [quantite, setQuantite] = useState(0)
-   
-    //fonction qui ajoute le produit
-    const ajoutePanier = (item)=>{
-        //ajoute le produit dans le panier
-       setPanier(prev => {
-            //verifier si le produit existe dans le panier
-            const exist = prev.find(x => x.id === item.id)
-            if(exist){
-                // si il existe on augmente la quantité
-                return prev.map(x => x.id === item.id ? {...exist, quantite: exist.quantite + 1} : x)
-            }
-            return [...prev, {...item, quantite: 1}]    
-       })
-    }
+    // panier contient les items avec leur champ quantity
+    const [panier, setPanier] = useState([]);
 
-    console.log(quantite)
-
-     useEffect(() => { 
+    useEffect(() => {
         const chargerSacs = async () => {
             try {
-            const res = await fetch('http://192.168.1.10:3000/api/sacs');
-            console.info("connecté ...")
-        
-            if (!res.ok) {
-                //throw = lancer une erreur (interruption immédiate).
-                // new Error() = créer un objet erreur avec message, nom et stack.
-                throw new Error("Sacs introuvable");
-            }
-        
-            const data = await res.json();
-            setSacs(data); // mise à jour de l’état avec les données reçues
+                const res = await fetch('http://192.168.1.14:3000/api/sacs');
+                if (!res.ok) throw new Error("Sacs introuvable");
+                const data = await res.json();
+                setSacs(data);
             } catch (err) {
-            setErreur(err.message); // capture et affichage de l’erreur
-            } finally {
-            // setLoading(false); // fin du chargement dans tous les cas
-            console.warn("api a été appelle")
+                setErreur(err.message);
             }
         };
-    
-    chargerSacs();
+        chargerSacs();
     }, []);
 
-        // // afficher un message au recherche
-        // const [message, setMesssage] = useState("")
-        // useEffect(()=>{
-        //     if(sacsFiltres.length == 0){
-        //         setMesssage("Aucun donnée ne correspond")
-        //     }
-        // },recherche)
+    const sacsFiltres = sacs.filter(p =>
+        p.libelle.toLowerCase().includes(recherche.toLowerCase())
+    );
 
-    
-        //function rechreche.
-        const sacsFiltres = sacs.filter(p =>
-            p.libelle.toLowerCase().includes(recherche.toLowerCase())
-        );
+    const AfficheDetails = (item) => {
+        Alert.alert("Détail du sac", `${item.libelle} \nPrix : ${item.prix} €`);
+    };
 
-   return (<>
-                
-                {/* button recherche */}
-                <View style={{margin:50,}}>
-                    <TextInput 
+    // ajoute ou incrémente la quantité dans le panier pour un item donné
+    const ajoutePanier = (item) => {
+        setPanier(prev => {
+            const exist = prev.find(p => p._id === item._id);
+            if (exist) {
+                return prev.map(p =>
+                    p._id === item._id ? { ...p, quantity: p.quantity + 1 } : p
+                );
+            }
+            return [...prev, { ...item, quantity: 1 }];
+        });
+    };
+
+    // obtient la quantité courante pour un item depuis le panier
+    const getQuantityById = (item) => {
+        return panier.find(p => p._id === item._id)?.quantity || 0;
+    };
+
+    // nombre total d'articles (somme des quantités)
+    const totalItems = panier.reduce((sum, p) => sum + (p.quantity || 0), 0);
+
+    return (
+        <>
+            <View style={{ margin: 50 }}>
+                <TextInput
                     placeholder="Rechercher un sac..."
                     value={recherche}
                     onChangeText={setRecherche}
                     style={{
-                    borderWidth: 1,
-                    borderColor: '#110404ff',
-                    borderRadius: 5,
-                    padding: 8,
-                    marginBottom: 10,
+                        borderWidth: 1,
+                        borderColor: '#110404ff',
+                        borderRadius: 20,
+                        padding: 8,
+                        marginBottom: 10,
                     }}
                 />
-                {/* {message && <Text> {message} </Text>} */}
-                      
+            </View>
+
+            <View>
+                <Text style={style.cartText}>🧺 Sac
+                    {totalItems > 1 && "s"} : {totalItems}
+                </Text>
+            </View>
+
+            <View style={style.container}>
+                {sacsFiltres.length == 0 ?
                     <View style={style.container}>
-                            <Text style={style.title}>Liste des Produits</Text>
+                        <Text style={style.title}>Aucun donnée ne correspond</Text>
                     </View>
-                </View>
+                    : null}
 
-                <View>
-                    <Text style={style.cartText}>🧺 Sacs : 
-                        {panier.length > 1 && "s"} {panier.length}
-                    </Text>
-                </View>
-                
-
-                <View style={style.container}>
-                    <FlatList 
-                        // data={produits}
-                        data={sacsFiltres}
-                        keyExtractor={item => item._id}
-                        renderItem={({ item }) => (
-
-                        <Sacs 
-                            item={item} 
-                            //recupère le produit et les details.
-                            onAddToCart={()=>{ajoutePanier(item)}}
-                            quantite = {quantite}  
-                            />) }
-                            ItemSeparatorComponent={<View style={style.separator}
-                            
-                             />}
-                            contentContainerStyle={style.list}  
+                <FlatList
+                    data={sacsFiltres}
+                    keyExtractor={item => item._id}
+                    renderItem={({ item }) => (
+                        <Sacs
+                            item={item}
+                            onAddToCart={() => { ajoutePanier(item); }}
+                            onShowDetail={() => { AfficheDetails(item); }}
+                            quantite={"🚧 " + getQuantityById(item)}
                         />
-                    </View>
-                </>);
-
+                    )}
+                    ItemSeparatorComponent={<View style={style.separator} />}
+                    contentContainerStyle={style.list}
+                />
+            </View>
+        </>
+    );
 }
-export default CategoryScreen
+
+export default CategoryScreen;
