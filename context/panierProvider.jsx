@@ -1,13 +1,10 @@
 import { createContext,  useCallback, useContext, useMemo, useState } from "react";
-import Sacs from './../components/sacs';
 
 const PanierContext = createContext()
 
 export const PanierProvider = ({children}) => {
     //list des objets
     const [panier, setPanier] = useState([]) 
-    //temp
-    
 
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
@@ -37,9 +34,6 @@ export const PanierProvider = ({children}) => {
         return panier.find(p => p._id === item._id)?.quantity || 0;
       }, [panier]);
 
-    //   const sacsFiltres = sacs.filter(p =>
-    //     p.libelle.toLowerCase().includes(recherche.toLowerCase())
-    // );
    
     /*********** FIN */
     //on utlise memo
