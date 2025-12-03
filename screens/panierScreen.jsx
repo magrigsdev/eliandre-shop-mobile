@@ -5,7 +5,7 @@ import { styles } from "../styles/panierStyle";
 
 
 const PanierScreen = () => {
-  const { panier, totalPrice, totalItems, emptyPanier } = usePanier();
+  const { panier, totalPrice, totalItems, emptyPanier,deleteOneFromPanier } = usePanier();
 
   return (
     <View style={styles.container}>
@@ -50,7 +50,7 @@ const PanierScreen = () => {
 
                             {/* Remove button */}
                             <TouchableOpacity 
-                                onPress={()=>{console.log("supprimer un element du panier")}}
+                                onPress={()=>{deleteOneFromPanier(item)}}
                                 style={styles.deleteBtn}>
                                 
                                 <Ionicons name="trash" size={24} color="#bf1616ff" />
