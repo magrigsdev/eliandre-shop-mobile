@@ -1,13 +1,11 @@
 import { createContext,  useCallback, useContext, useMemo, useState } from "react";
-import Sacs from './../components/sacs';
+
 
 const PanierContext = createContext()
 
 export const PanierProvider = ({children}) => {
     //list des objets
-    const [panier, setPanier] = useState([]) 
-    //temp
-    
+    const [panier, setPanier] = useState([])
 
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
@@ -23,12 +21,16 @@ export const PanierProvider = ({children}) => {
     },[])
 
     //calcule le total des articles
-    const totalItems = useMemo(()=>panier.reduce((sum, p) => sum + (p.quantity || 0), 0), [panier])
+    const totalItems = useMemo(
+      ()=>panier?.reduce((sum, p) => sum + (p.quantity || 0), 0), [panier])
 
     //total des produit dans le panier
     const totalPrice = useMemo(
-      ()=> panier.reduce((sum, p) => 
-        sum + (p.quantity || 0) * (p.prix ?? p.price ?? 0), 0)
+          ()=>  
+            //(panier || [])
+            //panier.reduce : init 
+            panier?.reduce((sum, p) => 
+            sum + (p.quantity || 0) * (p.prix ?? p.price ?? 0), 0).toFixed(2)
       ,[panier])
 
     //obtenir la quantité courant
@@ -37,15 +39,44 @@ export const PanierProvider = ({children}) => {
         return panier.find(p => p._id === item._id)?.quantity || 0;
       }, [panier]);
 
-    //   const sacsFiltres = sacs.filter(p =>
-    //     p.libelle.toLowerCase().includes(recherche.toLowerCase())
-    // );
+    //vider le panier
+    const emptyPanier = useCallback(()=>{
+        if(!panier) return 0
+        setPanier([])
+    },[])
+
+    //supprimer un element dans le panier
+    /** @param id */
+    const deleteOneFromPanier = useCallback((item)=>{
+      // setPanier(
+      //   // prev => {
+      //   //       prev.map(p=>p._id === item._id 
+      //   //         ? {...p, quantity: p.quantity - 1 } : p
+      //   //         ).filter(p=>p.quantity > 0)
+      //   //     } 
+        
+      // )
+      console.log("en cours de ceonception")
+      // totalPrice=0
+    }, [])
+
    
     /*********** FIN */
     //on utlise memo
     const value = useMemo(
-      ()=>({getQuantityById, totalPrice, totalItems, ajoutePanier}),
-      [getQuantityById, totalPrice, totalItems, ajoutePanier ]
+      ()=>({getQuantityById, 
+            totalPrice, 
+            totalItems, 
+            ajoutePanier, 
+            panier,
+            emptyPanier,
+            deleteOneFromPanier
+          }),
+      [getQuantityById, totalPrice, 
+        totalItems, ajoutePanier,
+        panier, emptyPanier,
+        deleteOneFromPanier 
+      ]
     )
 
     //return the context
@@ -56,6 +87,10 @@ export const PanierProvider = ({children}) => {
     )
 }
 
+/**
+ * @returns totalPrice, totalItems, ajoutePanier,deleteOneFromPanier
+ * @returns getQuantityById,  panier, emptyPanier
+ */
 export const usePanier = () => 
   {
     const ctx = useContext(PanierContext)
