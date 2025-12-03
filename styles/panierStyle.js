@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+export const styles =  StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -13,6 +13,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     gap: 6,
     marginBottom: 8,
+    marginTop:100,
   },
 
   title: {
@@ -97,6 +98,14 @@ export default StyleSheet.create({
 
   payButton: {
     backgroundColor: "#00897B",
+    paddingVertical: 14,
+    borderRadius: 25,
+    width: "85%",
+    alignSelf: "center",
+    marginTop: 20,
+  },
+  videButton: {
+    backgroundColor: "#890044ff",
     paddingVertical: 14,
     borderRadius: 25,
     width: "85%",
