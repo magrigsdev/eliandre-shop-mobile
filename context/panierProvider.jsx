@@ -1,4 +1,5 @@
 import { createContext,  useCallback, useContext, useMemo, useState } from "react";
+import { Alert } from "react-native";
 
 const PanierContext = createContext()
 
@@ -34,12 +35,29 @@ export const PanierProvider = ({children}) => {
         return panier.find(p => p._id === item._id)?.quantity || 0;
       }, [panier]);
 
+    //vider le panier
+    const emptyPanier = useCallback(()=>{
+        if(!panier) return 0
+        setPanier([])
+        Alert.alert("le panier a été vidé 😀")
+    },[])
+
+    //supprimer un element dans le panier
+
    
     /*********** FIN */
     //on utlise memo
     const value = useMemo(
-      ()=>({getQuantityById, totalPrice, totalItems, ajoutePanier, panier}),
-      [getQuantityById, totalPrice, totalItems, ajoutePanier,panier ]
+      ()=>({getQuantityById, 
+            totalPrice, 
+            totalItems, 
+            ajoutePanier, 
+            panier,
+            emptyPanier
+          }),
+      [getQuantityById, totalPrice, 
+        totalItems, ajoutePanier,
+        panier, emptyPanier ]
     )
 
     //return the context
@@ -50,6 +68,10 @@ export const PanierProvider = ({children}) => {
     )
 }
 
+/**
+ * @returns totalPrice, totalItems, ajoutePanier,
+ * @returns getQuantityById,  panier, emptyPanier
+ */
 export const usePanier = () => 
   {
     const ctx = useContext(PanierContext)

@@ -5,7 +5,7 @@ import { styles } from "../styles/panierStyle";
 
 
 const PanierScreen = () => {
-  const { panier, totalPrice, totalItems } = usePanier();
+  const { panier, totalPrice, totalItems, emptyPanier } = usePanier();
 
   return (
     <View style={styles.container}>
@@ -21,6 +21,7 @@ const PanierScreen = () => {
         Découvrez la beauté signée Eliandre Shop — il ne vous reste plus qu’à
         valider votre commande
       </Text>
+
         { panier ? 
             panier.length === 0 
                 ? (<Text style={styles.panierVide}>😭 Le panier est vide </Text>) 
@@ -48,8 +49,11 @@ const PanierScreen = () => {
                             </View>
 
                             {/* Remove button */}
-                            <TouchableOpacity style={styles.deleteBtn}>
-                            <Ionicons name="trash-can" size={24} color="#00897B" />
+                            <TouchableOpacity 
+                                onPress={()=>{console.log("supprimer un element du panier")}}
+                                style={styles.deleteBtn}>
+                                
+                                <Ionicons name="trash" size={24} color="#bf1616ff" />
                             </TouchableOpacity>
                         </View>
                         )}
@@ -73,7 +77,7 @@ const PanierScreen = () => {
 
       {/* vide panier */}
       <TouchableOpacity 
-            onPress={()=>console.log("button de vider le panier")}
+            onPress={()=>emptyPanier()}
             style={styles.videButton}>
         <Text style={styles.payText}>Vider le panier</Text>
       </TouchableOpacity>
