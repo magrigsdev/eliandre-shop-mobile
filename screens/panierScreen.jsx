@@ -21,38 +21,45 @@ const PanierScreen = () => {
         Découvrez la beauté signée Eliandre Shop — il ne vous reste plus qu’à
         valider votre commande
       </Text>
+        { panier ? 
+            panier.length === 0 
+                ? (<Text style={styles.panierVide}>😭 Le panier est vide </Text>) 
+                : (
+                    <FlatList
+                        data={panier}
+                        keyExtractor={(item) => item._id}
+                        style={{ flexGrow: 0 }}
+                        renderItem={({ item }) => (
+                        <View style={styles.card}>
+                            <Image source={{ uri: item.image }} style={styles.image} />
 
-      {/* Product List */}
-      <FlatList
-        data={panier}
-        keyExtractor={(item) => item._id}
-        style={{ flexGrow: 0 }}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.image }} style={styles.image} />
+                            <View style={styles.info}>
+                                <Text style={styles.name}>{item.libelle}</Text>
+                                <Text style={styles.price}>{item.prix} €</Text>
+                                <Text style={styles.desc}>
+                                    Ce sac allie élégance et praticité grâce à son design raffiné
+                                    et ses finitions soignées.
+                                </Text>
 
-            <View style={styles.info}>
-              <Text style={styles.name}>{item.libelle}</Text>
-              <Text style={styles.price}>{item.prix} €</Text>
-              <Text style={styles.desc}>
-                Ce sac allie élégance et praticité grâce à son design raffiné
-                et ses finitions soignées.
-              </Text>
+                                {/* Quantity */}
+                                <Text style={styles.quantity}>
+                                    ( {item.quantity} produits )
+                                </Text>
+                            </View>
 
-              {/* Quantity */}
-              <Text style={styles.quantity}>
-                ( {item.quantity} produits )
-              </Text>
-            </View>
+                            {/* Remove button */}
+                            <TouchableOpacity style={styles.deleteBtn}>
+                            <Ionicons name="trash-can" size={24} color="#00897B" />
+                            </TouchableOpacity>
+                        </View>
+                        )}
+                        ItemSeparatorComponent={() => <View style={styles.separator} />}
+                    />
+                    )
+                : null 
+        }
 
-            {/* Remove button */}
-            <TouchableOpacity style={styles.deleteBtn}>
-              <Ionicons name="trash-can" size={24} color="#00897B" />
-            </TouchableOpacity>
-          </View>
-        )}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-      />
+      
 
       {/* Total */}
       <Text style={styles.totalText}>Total : {totalPrice} €</Text>

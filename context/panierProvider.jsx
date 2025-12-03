@@ -38,8 +38,8 @@ export const PanierProvider = ({children}) => {
     /*********** FIN */
     //on utlise memo
     const value = useMemo(
-      ()=>({getQuantityById, totalPrice, totalItems, ajoutePanier}),
-      [getQuantityById, totalPrice, totalItems, ajoutePanier ]
+      ()=>({getQuantityById, totalPrice, totalItems, ajoutePanier, panier}),
+      [getQuantityById, totalPrice, totalItems, ajoutePanier,panier ]
     )
 
     //return the context

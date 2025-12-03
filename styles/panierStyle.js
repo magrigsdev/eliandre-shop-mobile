@@ -13,7 +13,7 @@ export const styles =  StyleSheet.create({
     justifyContent: "center",
     gap: 6,
     marginBottom: 8,
-    marginTop:100,
+    marginTop:50,
   },
 
   title: {
@@ -33,6 +33,13 @@ export const styles =  StyleSheet.create({
     textAlign: "center",
     fontSize: 15,
     color: "#555",
+    marginVertical: 16,
+  },
+  panierVide: {
+    marginTop:20,
+    textAlign: "center",
+    fontSize: 22,
+    color: "#E53935",
     marginVertical: 16,
   },
 
