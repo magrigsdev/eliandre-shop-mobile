@@ -1,11 +1,10 @@
 import { Text, View, TouchableOpacity,  Image } from "react-native";
 import { styles } from "../styles/profilStyle";
+import { useNavigation } from '@react-navigation/native';
 
 const ProfilScreen = ({userInfo}) => {
-  
-  const handleLogout = () => {
-    console.log("Déconnexion...");
-  };
+
+ const navigation = useNavigation(); 
 
   return (
     <View style={styles.container}>
@@ -23,7 +22,7 @@ const ProfilScreen = ({userInfo}) => {
           <Text style={styles.infoText}> {userInfo.Telephone}</Text>
         </View>
 
-        <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
+        <TouchableOpacity style={styles.logoutBtn} onPress={()=> navigation.replace('signup')}>
           <Text style={styles.logoutTxt}>Déconnexion</Text>
         </TouchableOpacity>
       </View>

@@ -12,7 +12,6 @@ const Stacks = createNativeStackNavigator()
 const Stack = () => {
     return (
             <> 
-               
                     <Stacks.Navigator 
                     initialRouteName="welcome"
                     screenOptions={{headerShown: false}}
