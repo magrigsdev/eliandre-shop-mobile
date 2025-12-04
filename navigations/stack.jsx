@@ -5,13 +5,15 @@ import RegisterScreen from "../screens/registerScreen";
 import { Tabs } from "./tab";
 
 
+
 const Stacks = createNativeStackNavigator()
 
 
 const Stack = () => {
     return (
-            <>                
-                <Stacks.Navigator 
+            <> 
+               
+                    <Stacks.Navigator 
                     initialRouteName="welcome"
                     screenOptions={{headerShown: false}}
                     >
@@ -27,7 +29,9 @@ const Stack = () => {
                         <Stacks.Screen name="tabs" component={Tabs}
                         options={{ title :"Accueil" }}
                         />
-                </Stacks.Navigator>               
+                    </Stacks.Navigator>
+                              
+                               
             </>    
     )
 }
