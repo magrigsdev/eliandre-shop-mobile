@@ -3,7 +3,7 @@ import { style } from './../styles/welcomeStyle';
 
 const HomeScreen = ({userInfo}) => {
 
-    console.debug("we are in home ",userInfo)
+    
     return (
         <View style={style.main}>
         

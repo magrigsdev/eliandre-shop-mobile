@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 20,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "#ddd",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 10,
@@ -26,12 +26,11 @@ export const styles = StyleSheet.create({
     height: 110,
     borderRadius: 55,
     borderWidth: 3,
-    borderColor: "#4B7BE5",
+    borderColor: "#ddd",
     marginBottom: 15,
   },
   name: {
     fontSize: 20,
-    fontWeight: "700",
     color: "#333",
   },
   email: {

@@ -43,12 +43,17 @@ export const Tabs = ({route}) => {
                 >
                     <Tab.Screen  
                         name="home"
-                        // component={HomeScreen}
                         children={()=><HomeScreen userInfo={userInfo}/>}
                     />
                     <Tab.Screen name="category" component={CategoryScreen} />
                     <Tab.Screen name="panier" component={PanierScreen} />
-                    <Tab.Screen name="profil" component={ProfilScreen} userInfo={userInfo} />
+                    <Tab.Screen 
+                        name="profil" 
+                        children={
+                            ()=><ProfilScreen 
+                            userInfo={userInfo}/>
+                        }
+                     />
                     
                 </Tab.Navigator>
             </PanierProvider>

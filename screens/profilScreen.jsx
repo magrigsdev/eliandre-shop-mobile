@@ -1,8 +1,8 @@
 import { Text, View, TouchableOpacity,  Image } from "react-native";
 import { styles } from "../styles/profilStyle";
 
-const ProfilScreen = () => {
-
+const ProfilScreen = ({userInfo}) => {
+  
   const handleLogout = () => {
     console.log("Déconnexion...");
   };
@@ -15,12 +15,12 @@ const ProfilScreen = () => {
           style={styles.avatar}
         />
 
-        <Text style={styles.name}>John Doe</Text>
-        <Text style={styles.email}>johndoe@example.com</Text>
+        <Text style={styles.name}> <Text style={{textTransform:'capitalize'}}>{userInfo.Prenom}</Text>  <Text style={{textTransform:'uppercase',fontWeight: '700'}}>{userInfo.Nom}</Text> </Text>
+        <Text style={styles.email}>{userInfo.Email} </Text>
 
         <View style={styles.infoBox}>
           <Text style={styles.infoLabel}>📞 Phone</Text>
-          <Text style={styles.infoText}>+1 234 567 890</Text>
+          <Text style={styles.infoText}> {userInfo.Telephone}</Text>
         </View>
 
         <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
