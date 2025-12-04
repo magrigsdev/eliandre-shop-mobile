@@ -6,7 +6,7 @@ const PanierContext = createContext()
 export const PanierProvider = ({children}) => {
     //list des objets
     const [panier, setPanier] = useState([])
-
+    
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
       setPanier(prev => {

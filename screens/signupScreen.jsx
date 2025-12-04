@@ -4,6 +4,7 @@ import { useState } from "react"
 import { VerifUser } from "../database/tasks"
 
 
+
 const SingupScreen = ({navigation}) => {
 
     // HOOKS INITIATION 
@@ -96,10 +97,12 @@ const SingupScreen = ({navigation}) => {
             // }
    
     //temporaire ...
-    const handleOnSubmit = () => {
-            navigation.replace('tabs')    
-    }
-    
+        const handleOnSubmit = () => {
+                navigation.replace('tabs')    
+        }
+       
+
+        /** fin */
 
         return ( 
             
