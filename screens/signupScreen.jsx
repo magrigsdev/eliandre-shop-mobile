@@ -75,7 +75,7 @@ const SingupScreen = ({navigation}) => {
                     const error = {}
                     const user = await VerifUser(formData.email, formData.mtp);
                     if(user){
-                        
+                        Alert.alert('Connexion réussie', `Salut, ${user.Prenom} ${user.Nom} !`);
                         navigation.replace('tabs')
                     }
                     else {

@@ -10,7 +10,7 @@ const ProfilScreen = () => {
     <View style={styles.container}>
       <View style={styles.card}>
         <Image 
-          source={{ uri: "https://i.pravatar.cc/150" }} 
+          source={{ uri: "https://cdn-icons-png.flaticon.com/512/847/847969.png" }} 
           style={styles.avatar}
         />
 
