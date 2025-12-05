@@ -4,8 +4,6 @@ import { useState } from "react"
 import { VerifUser } from "../database/tasks"
 
 
-
-
 const SingupScreen = ({navigation}) => {
 
     // HOOKS INITIATION 
@@ -71,19 +69,14 @@ const SingupScreen = ({navigation}) => {
 
         return Object.keys(newError).length === 0
     }
-    
     //*********** HANDLE ON SUBMIT */
             const handleOnSubmit = async () => {
-
                 if(Validation()) {
-
                     const error = {}
                     const user = await VerifUser(formData.email, formData.mtp);
-
                     if(user){
-                        // console.log("User found : ", user)
-                        Alert.alert("Connexion reussi.")
-                        navigation.replace('tabs', {form: user})
+                        
+                        navigation.replace('tabs')
                     }
                     else {
                         // console.log("User not found : ", user, formData)

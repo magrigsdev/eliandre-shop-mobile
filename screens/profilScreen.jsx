@@ -2,7 +2,7 @@ import { Text, View, TouchableOpacity,  Image } from "react-native";
 import { styles } from "../styles/profilStyle";
 import { useNavigation } from '@react-navigation/native';
 
-const ProfilScreen = ({userInfo}) => {
+const ProfilScreen = () => {
 
  const navigation = useNavigation(); 
 
@@ -13,14 +13,6 @@ const ProfilScreen = ({userInfo}) => {
           source={{ uri: "https://i.pravatar.cc/150" }} 
           style={styles.avatar}
         />
-
-        <Text style={styles.name}> <Text style={{textTransform:'capitalize'}}>{userInfo.Prenom}</Text>  <Text style={{textTransform:'uppercase',fontWeight: '700'}}>{userInfo.Nom}</Text> </Text>
-        <Text style={styles.email}>{userInfo.Email} </Text>
-
-        <View style={styles.infoBox}>
-          <Text style={styles.infoLabel}>📞 Phone</Text>
-          <Text style={styles.infoText}> {userInfo.Telephone}</Text>
-        </View>
 
         <TouchableOpacity style={styles.logoutBtn} onPress={()=> navigation.replace('signup')}>
           <Text style={styles.logoutTxt}>Déconnexion</Text>
