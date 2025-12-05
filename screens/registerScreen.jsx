@@ -2,7 +2,7 @@ import { Alert, Image, Pressable, ScrollView, Text, TextInput, View } from 'reac
 import { style } from '../styles/registerStyle'
 import { useEffect, useState } from 'react'
 import { InitDB } from '../database/initdb'
-import { InsertUser } from '../database/tasks'
+import { getUsers, InsertUser } from '../database/tasks'
 
 const RegisterScreen = ({navigation}) => {
     // HOOKS INITIATION 
@@ -168,14 +168,20 @@ const RegisterScreen = ({navigation}) => {
             };
             setupDB();
         }, []);
+        //*************** GET USER BY EMAILS */
+        const handleUser = async (email) => {
+            try {
+               return  await getUsers(email)
+            } catch (error) {
+               console.error('Erreur for getting user :', error); 
+            }
+        }
         //*********** HANDLE ON SUBMIT */
         const handleOnSubmit = async () => {
             
             if(validationChamps()){
                   
                 try {
-                        
-                     console.log ("je suis dans aprés ")
                         await InsertUser(
                                 formData.nom, 
                                 formData.prenom,
@@ -183,14 +189,23 @@ const RegisterScreen = ({navigation}) => {
                                 formData.mtp,
                                 formData.telephone);
                                 Alert.alert('Inscription réussie', `Bienvenue, ${formData.prenom} ${formData.nom} !`);
-
-                        navigation.replace('tabs', {nom: formData.nom})
+                        
+                        //mise en forme 
+                        // const myform = {}
+                        // myform.Email = formData.email,
+                        // myform.Nom = formData.nom,
+                        // myform.Prenom = formData.prenom,
+                        // myform.Telephone = formData.telephone,
+                        const forms = handleUser(formData.email)
+                        console.log("form temp in register found : ", forms)
+                        //******************** */
+                        navigation.replace('tabs', {form: forms})
                         setFormData({email:'', mtp:'',nom:'',prenom:'',telephone:'',cmtp:''}) 
                     } 
                     catch (error) {
                         console.error('Erreur lors de l\'insertion :', error);
                         Alert.alert('Erreur', 'Impossible d\'insérer l\'utilisateur.');
-                    
+    
                     }
      
             }

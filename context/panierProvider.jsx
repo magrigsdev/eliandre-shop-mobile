@@ -6,7 +6,8 @@ const PanierContext = createContext()
 export const PanierProvider = ({children}) => {
     //list des objets
     const [panier, setPanier] = useState([])
-
+    const [user, setUser] = useState([])
+    
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
       setPanier(prev => {
@@ -47,7 +48,7 @@ export const PanierProvider = ({children}) => {
 
     //supprimer un element dans le panier
     /** @param id */
-    const deleteOneFromPanier = useCallback((item)=>{
+    const deleteOneFromPanier = useCallback(()=>{
       // setPanier(
       //   // prev => {
       //   //       prev.map(p=>p._id === item._id 
@@ -56,9 +57,14 @@ export const PanierProvider = ({children}) => {
       //   //     } 
         
       // )
-      console.log("en cours de ceonception")
+      console.debug("en cours de ceonception")
       // totalPrice=0
     }, [])
+
+    //logout
+    const logout = useCallback(()=>{
+      setUser([])
+    })
 
    
     /*********** FIN */
@@ -70,12 +76,16 @@ export const PanierProvider = ({children}) => {
             ajoutePanier, 
             panier,
             emptyPanier,
-            deleteOneFromPanier
+            deleteOneFromPanier,
+
+            user,setUser,logout
           }),
       [getQuantityById, totalPrice, 
         totalItems, ajoutePanier,
         panier, emptyPanier,
-        deleteOneFromPanier 
+        deleteOneFromPanier,
+
+        user,setUser,logout
       ]
     )
 
@@ -88,8 +98,10 @@ export const PanierProvider = ({children}) => {
 }
 
 /**
+ * @callback logout  emptyPanier
+ * @return user,setUser
  * @returns totalPrice, totalItems, ajoutePanier,deleteOneFromPanier
- * @returns getQuantityById,  panier, emptyPanier
+ * @returns getQuantityById,  panier, 
  */
 export const usePanier = () => 
   {

@@ -69,37 +69,34 @@ const SingupScreen = ({navigation}) => {
 
         return Object.keys(newError).length === 0
     }
-    
     //*********** HANDLE ON SUBMIT */
-            // const handleOnSubmit = async () => {
+            const handleOnSubmit = async () => {
+                if(Validation()) {
+                    const error = {}
+                    const user = await VerifUser(formData.email, formData.mtp);
+                    if(user){
+                        
+                        navigation.replace('tabs')
+                    }
+                    else {
+                        // console.log("User not found : ", user, formData)
+                        error.email = "Email n'existe pas !"
+                        error.mtp = "Mot de passe ne correspond pas !"
+                    }
 
-            //     if(Validation()) {
-
-            //         const error = {}
-            //         const user = await VerifUser(formData.email, formData.mtp);
-
-            //         if(user){
-            //             // console.log("User found : ", user)
-            //             Alert.alert("Connexion reussi.")
-            //             navigation.replace('tabs', {nom: user.Nom})
-            //         }
-            //         else {
-            //             // console.log("User not found : ", user, formData)
-            //             error.email = "Email n'existe pas !"
-            //             error.mtp = "Mot de passe ne correspond pas !"
-            //         }
-
-            //         setErrors(error)
-            //         setFormData({email: null, mtp: null})
-            //     }
+                    setErrors(error)
+                    setFormData({email: null, mtp: null})
+                }
                 
-            // }
+            }
    
     //temporaire ...
-    const handleOnSubmit = () => {
-            navigation.replace('tabs')    
-    }
-    
+        // const handleOnSubmit = () => {
+        //         navigation.replace('tabs')    
+        // }
+       
+
+        /** fin */
 
         return ( 
             

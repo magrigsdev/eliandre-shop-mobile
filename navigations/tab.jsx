@@ -12,9 +12,7 @@ const Tab =  createBottomTabNavigator()
 export const Tabs = ({route}) => {
 
     //recupère l'email de l'utilisateur via route.params
-    const user = route.params?.nom
-    console.log("Email de l'utilisateur : ", user)
-
+    
     return (<>
             <PanierProvider>
                 <Tab.Navigator
@@ -42,13 +40,14 @@ export const Tabs = ({route}) => {
                     })} 
                 >
                     <Tab.Screen  
-                        name="home"
-                        // component={HomeScreen}
-                        children={()=><HomeScreen nom={user}/>}
+                        name="home" component={HomeScreen}
+                        
                     />
                     <Tab.Screen name="category" component={CategoryScreen} />
                     <Tab.Screen name="panier" component={PanierScreen} />
-                    <Tab.Screen name="profil" component={ProfilScreen} />
+                    <Tab.Screen 
+                        name="profil" component={ProfilScreen}
+                     />
                     
                 </Tab.Navigator>
             </PanierProvider>

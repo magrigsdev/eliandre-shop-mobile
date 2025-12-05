@@ -26,3 +26,14 @@ export const VerifUser = async (email, motDePasse) => {
   
 };
 
+export const getUsers = async (email) => {
+  const db = await openDB();
+  const result = await db.getAllAsync(
+    'SELECT * FROM Users WHERE Email = ? ;',
+    [email]
+  );
+  // console.log(email, motDePasse)
+  return result.length > 0 ? result[0] : null;
+  
+};
+
