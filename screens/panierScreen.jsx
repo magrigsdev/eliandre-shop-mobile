@@ -6,7 +6,8 @@ import { styles } from "../styles/panierStyle";
 
 const PanierScreen = () => {
   const { panier, totalPrice, totalItems, emptyPanier,deleteOneFromPanier } = usePanier();
-
+  //fitre le panier
+  const filtrePanier = panier.filter(produit => produit.quantity > 0);
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -22,12 +23,12 @@ const PanierScreen = () => {
         valider votre commande
       </Text>
 
-        { panier ? 
-            panier.length === 0 
+        { filtrePanier ? 
+            filtrePanier.length === 0 
                 ? (<Text style={styles.panierVide}>😭 Le panier est vide </Text>) 
                 : (
                     <FlatList
-                        data={panier}
+                        data={filtrePanier}
                         keyExtractor={(item) => item._id}
                         style={{ flexGrow: 0 }}
                         renderItem={({ item }) => (
@@ -62,8 +63,6 @@ const PanierScreen = () => {
                     )
                 : null 
         }
-
-      
 
       {/* Total */}
       <Text style={styles.totalText}>Total : {totalPrice} €</Text>
