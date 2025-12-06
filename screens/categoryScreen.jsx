@@ -9,13 +9,14 @@ const CategoryScreen = () => {
     const [sacs, setSacs] = useState([]);
     const [erreur, setErreur] = useState(null);
 
-    const { ajoutePanier, getQuantityById, totalItems } = usePanier();
+    const { ajoutePanier, getQuantityById, totalItems,panier } = usePanier();
     useEffect(() => {
         const chargerSacs = async () => {
             try {
                 //172.20.10.2
                 //192.168.1.14
-                const res = await fetch('http://172.20.10.2:3000/api/sacs');
+                //192.168.1.14
+                const res = await fetch('http://192.168.1.14:3000/api/sacs');
                 if (!res.ok) throw new Error("Sacs introuvables");
                 const data = await res.json();
                 setSacs(data);

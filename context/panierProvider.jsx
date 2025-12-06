@@ -6,7 +6,6 @@ const PanierContext = createContext()
 export const PanierProvider = ({children}) => {
     //list des objets
     const [panier, setPanier] = useState([])
-    const [user, setUser] = useState([])
     
     //ajoute le produit ou increment sa quantité
     const ajoutePanier = useCallback((item)=>{
@@ -19,6 +18,24 @@ export const PanierProvider = ({children}) => {
             }
             return [...prev, { ...item, quantity: 1 }];
         });
+    },[])
+
+    //enlever le produit du panier
+    const deleteOneFromPanier = useCallback((item)=>{
+      //premier ca quantité  > 1
+      if(item.quantity > 0) {
+          setPanier(prev => {
+              const exist = prev.find(p => p._id === item._id);
+              if (exist) {
+                  return prev.map(p =>
+                      p._id === item._id ? { ...p, quantity: p.quantity - 1 } : p
+                  );
+              }
+              return [...prev, { ...item, quantity: 1 }];
+          });
+          
+      }
+      
     },[])
 
     //calcule le total des articles
@@ -46,21 +63,6 @@ export const PanierProvider = ({children}) => {
         setPanier([])
     },[])
 
-    //supprimer un element dans le panier
-    /** @param id */
-    const deleteOneFromPanier = useCallback(()=>{
-      // setPanier(
-      //   // prev => {
-      //   //       prev.map(p=>p._id === item._id 
-      //   //         ? {...p, quantity: p.quantity - 1 } : p
-      //   //         ).filter(p=>p.quantity > 0)
-      //   //     } 
-        
-      // )
-      console.debug("en cours de ceonception")
-      // totalPrice=0
-    }, [])
-
     //logout
     const logout = useCallback(()=>{
       setUser([])
@@ -78,14 +80,14 @@ export const PanierProvider = ({children}) => {
             emptyPanier,
             deleteOneFromPanier,
 
-            user,setUser,logout
+            logout
           }),
       [getQuantityById, totalPrice, 
         totalItems, ajoutePanier,
         panier, emptyPanier,
         deleteOneFromPanier,
 
-        user,setUser,logout
+        logout
       ]
     )
 
@@ -98,7 +100,7 @@ export const PanierProvider = ({children}) => {
 }
 
 /**
- * @callback logout  emptyPanier
+ * @callback logout,deleteOneFromPanier,emptyPanier
  * @return user,setUser
  * @returns totalPrice, totalItems, ajoutePanier,deleteOneFromPanier
  * @returns getQuantityById,  panier, 

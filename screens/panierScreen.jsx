@@ -6,14 +6,15 @@ import { styles } from "../styles/panierStyle";
 
 const PanierScreen = () => {
   const { panier, totalPrice, totalItems, emptyPanier,deleteOneFromPanier } = usePanier();
-
+  //fitre le panier
+  const filtrePanier = panier.filter(produit => produit.quantity > 0);
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
         <Ionicons name="basket" size={42} color="#00796B" />
         <Text style={styles.title}>Panier</Text>
-        <Text style={styles.itemsCount}>({totalItems} produits)</Text>
+        <Text style={styles.itemsCount}>( {totalItems} {totalItems > 1 ? "produits " : "produit"} )</Text>
       </View>
 
       <Text style={styles.subtitle}>
@@ -22,12 +23,12 @@ const PanierScreen = () => {
         valider votre commande
       </Text>
 
-        { panier ? 
-            panier.length === 0 
+        { filtrePanier ? 
+            filtrePanier.length === 0 
                 ? (<Text style={styles.panierVide}>😭 Le panier est vide </Text>) 
                 : (
                     <FlatList
-                        data={panier}
+                        data={filtrePanier}
                         keyExtractor={(item) => item._id}
                         style={{ flexGrow: 0 }}
                         renderItem={({ item }) => (
@@ -44,7 +45,7 @@ const PanierScreen = () => {
 
                                 {/* Quantity */}
                                 <Text style={styles.quantity}>
-                                    ( {item.quantity} produits )
+                                    ({item.quantity } {item.quantity > 1 ? "produits" : "produit"})
                                 </Text>
                             </View>
 
@@ -62,8 +63,6 @@ const PanierScreen = () => {
                     )
                 : null 
         }
-
-      
 
       {/* Total */}
       <Text style={styles.totalText}>Total : {totalPrice} €</Text>
