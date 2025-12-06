@@ -36,7 +36,6 @@ const CategoryScreen = () => {
         Alert.alert("Détail du sac", `${item.libelle} \n${item.prix} €`);
     };
 
-    console.log(panier)
     return (
         <>
             <View style={{ margin: 50 }}>

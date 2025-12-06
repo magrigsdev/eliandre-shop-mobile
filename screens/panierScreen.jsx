@@ -14,7 +14,7 @@ const PanierScreen = () => {
       <View style={styles.headerContainer}>
         <Ionicons name="basket" size={42} color="#00796B" />
         <Text style={styles.title}>Panier</Text>
-        <Text style={styles.itemsCount}>({totalItems} produits)</Text>
+        <Text style={styles.itemsCount}>( {totalItems} {totalItems > 1 ? "produits " : "produit"} )</Text>
       </View>
 
       <Text style={styles.subtitle}>
@@ -45,7 +45,7 @@ const PanierScreen = () => {
 
                                 {/* Quantity */}
                                 <Text style={styles.quantity}>
-                                    ( {item.quantity} produits )
+                                    ({item.quantity } {item.quantity > 1 ? "produits" : "produit"})
                                 </Text>
                             </View>
 
